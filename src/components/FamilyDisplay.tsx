@@ -19,6 +19,7 @@ export function FamilyHomeContent({ family, userEmail }: FamilyDisplayProps) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copiedCode, setCopiedCode] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
   const generateInviteCode = useMutation(api.myFunctions.generateInviteCode);
 
   // Check if invite code is still valid
@@ -210,50 +211,88 @@ export function FamilyHomeContent({ family, userEmail }: FamilyDisplayProps) {
         )}
       </div>
 
-      {/* Info Box */}
+      {/* Info Box - Ausklappbar */}
       <div className="beos-info-box">
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', marginBottom: '20px' }}>
-          <div className="beos-icon beos-icon-purple" style={{ 
-            width: '40px', 
-            height: '40px', 
-            fontSize: '20px',
-            marginBottom: 0,
-            flexShrink: 0
-          }}>
-            💡
+        <div 
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'space-between',
+            cursor: 'pointer',
+            userSelect: 'none'
+          }}
+          onClick={() => setShowInfo(!showInfo)}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <div className="beos-icon beos-icon-purple" style={{ 
+              width: '40px', 
+              height: '40px', 
+              fontSize: '20px',
+              marginBottom: 0,
+              flexShrink: 0
+            }}>
+              💡
+            </div>
+            <h4 style={{ 
+              fontSize: '18px', 
+              fontWeight: '600', 
+              color: 'var(--color-text)',
+              margin: 0
+            }}>
+              So funktioniert's
+            </h4>
           </div>
-          <h4 style={{ 
-            fontSize: '18px', 
-            fontWeight: '600', 
-            color: 'var(--color-text)',
-            margin: 0
+          
+          <div style={{ 
+            fontSize: '18px',
+            color: 'var(--color-text-subtle)',
+            transition: 'transform 0.2s ease',
+            transform: showInfo ? 'rotate(180deg)' : 'rotate(0deg)'
           }}>
-            So funktioniert's:
-          </h4>
+            ▼
+          </div>
         </div>
         
-        <div style={{ paddingLeft: '56px' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{ color: 'var(--color-accent-blue)', fontSize: '16px' }}>⏰</span>
-              <span style={{ fontSize: '14px', color: 'var(--color-text)' }}>
-                Einladungscodes sind 1 Stunde gültig
-              </span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{ color: 'var(--color-accent-green)', fontSize: '16px' }}>👥</span>
-              <span style={{ fontSize: '14px', color: 'var(--color-text)' }}>
-                Neue Mitglieder können den Code verwenden, um beizutreten
-              </span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{ color: 'var(--color-accent-orange)', fontSize: '16px' }}>🔄</span>
-              <span style={{ fontSize: '14px', color: 'var(--color-text)' }}>
-                Sie können jederzeit einen neuen Code erstellen
-              </span>
+        {showInfo && (
+          <div style={{ 
+            paddingLeft: '56px', 
+            paddingTop: '20px',
+            marginTop: '20px',
+            position: 'relative'
+          }}>
+            {/* Subtiler Trenner ohne Border */}
+            <div style={{
+              position: 'absolute',
+              top: '0',
+              left: '0',
+              right: '0',
+              height: '1px',
+              background: 'linear-gradient(90deg, transparent 56px, var(--color-surface-hover) 56px)',
+              opacity: 0.6
+            }}></div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span style={{ color: 'var(--color-accent-blue)', fontSize: '16px' }}>⏰</span>
+                <span style={{ fontSize: '14px', color: 'var(--color-text)' }}>
+                  Einladungscodes sind 1 Stunde gültig
+                </span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span style={{ color: 'var(--color-accent-green)', fontSize: '16px' }}>👥</span>
+                <span style={{ fontSize: '14px', color: 'var(--color-text)' }}>
+                  Neue Mitglieder können den Code verwenden, um beizutreten
+                </span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span style={{ color: 'var(--color-accent-orange)', fontSize: '16px' }}>🔄</span>
+                <span style={{ fontSize: '14px', color: 'var(--color-text)' }}>
+                  Sie können jederzeit einen neuen Code erstellen
+                </span>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Nutzerpräferenzen */}

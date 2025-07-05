@@ -12,6 +12,7 @@ import { useState } from "react";
 import { CreateFamily } from "./components/CreateFamily";
 import { TabNavigation } from "./components/TabNavigation";
 import { FamilyHomeContent } from "./components/FamilyDisplay";
+import logoImage from "./assets/MahlzeitMagier-Logo-No-Text-Small-Transparent.png";
 
 export default function App() {
   return (
@@ -30,14 +31,20 @@ export default function App() {
         flexShrink: 0
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <div className="beos-icon beos-icon-orange">🍽️</div>
+          <img 
+            src={logoImage} 
+            alt="MahlzeitMagier Logo" 
+            style={{ 
+              objectFit: 'contain'
+            }} 
+          />
           <h1 style={{ 
             fontSize: '24px', 
             fontWeight: '600', 
             color: 'var(--color-text)',
             margin: 0
           }}>
-            Feed Me!
+            MahlzeitMagier
           </h1>
         </div>
         <SignOutButton />
@@ -69,9 +76,20 @@ function SignOutButton() {
         <button
           className="beos-button"
           onClick={() => void signOut()}
-          style={{ padding: '12px 20px', fontSize: '14px' }}
+          style={{ 
+            padding: '8px', 
+            fontSize: '16px',
+            minWidth: 'auto',
+            width: '40px',
+            height: '40px',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+          title="Abmelden"
         >
-          Abmelden
+          ⏻
         </button>
       )}
     </>
