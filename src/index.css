@@ -276,8 +276,8 @@ body {
 }
 
 /* Responsive Navigation Styles */
-/* Desktop/Tablet - Show left sidebar, hide bottom navigation */
-@media (min-width: 769px) {
+/* Desktop/Tablet - Show left sidebar, hide bottom navigation (only when enough height) */
+@media (min-width: 769px) and (min-height: 600px) {
   .desktop-nav {
     display: flex !important;
   }
@@ -287,18 +287,50 @@ body {
   .tab-container {
     flex-direction: row !important;
   }
+  
+  /* Hide sidebar header on desktop/tablet with enough height */
+  .sidebar-header {
+    display: none !important;
+  }
 }
 
-/* Mobile Portrait - Hide left sidebar, show bottom navigation */
-@media (max-width: 768px) and (orientation: portrait) {
+/* Desktop/Tablet with low height - use sidebar header */
+@media (min-width: 769px) and (max-height: 599px) {
+  .app-header {
+    display: none !important;
+  }
+  
+  .desktop-nav {
+    display: flex !important;
+  }
+  .mobile-nav {
+    display: none !important;
+  }
+  .tab-container {
+    flex-direction: row !important;
+  }
+  
+  /* Show header content in sidebar for low height desktop */
+  .sidebar-header {
+    display: block !important;
+  }
+}
+
+/* Mobile Portrait - Hide left sidebar, show bottom navigation (only when enough height) */
+@media (max-width: 768px) and (orientation: portrait) and (min-height: 600px) {
   .desktop-nav {
     display: none !important;
   }
   .mobile-nav {
-    display: flex !important;
+    display: flex !important;    
   }
   .tab-container {
     flex-direction: column !important;
+  }
+  
+  /* Hide sidebar header on mobile portrait with enough height */
+  .sidebar-header {
+    display: none !important;
   }
 }
 
@@ -313,6 +345,40 @@ body {
   }
   .tab-container {
     flex-direction: row !important;
+  }
+  
+  /* Hide main header in mobile landscape */
+  .app-header {
+    display: none !important;
+  }
+  
+  /* Show header content in sidebar */
+  .sidebar-header {
+    display: block !important;
+  }
+}
+
+/* Hide header when screen height is too low (less than 600px) - applies to all screen sizes */
+@media (max-height: 599px) {
+  .app-header {
+    display: none !important;
+  }
+  
+  /* Force sidebar layout for all low height screens */
+  .desktop-nav {
+    display: flex !important;
+    width: 180px;
+  }
+  .mobile-nav {
+    display: none !important;
+  }
+  .tab-container {
+    flex-direction: row !important;
+  }
+  
+  /* Show header content in sidebar for all low height screens */
+  .sidebar-header {
+    display: block !important;
   }
 }
 

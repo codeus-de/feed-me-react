@@ -10,11 +10,12 @@ interface TabNavigationProps {
   };
   userEmail?: string;
   homeContent: React.ReactNode;
+  headerContent?: React.ReactNode; // New prop for header content in mobile landscape
 }
 
 type TabType = 'home' | 'calendar';
 
-export function TabNavigation({ family, userEmail: _userEmail, homeContent }: TabNavigationProps) {
+export function TabNavigation({ family, userEmail: _userEmail, homeContent, headerContent }: TabNavigationProps) {
   const [activeTab, setActiveTab] = useState<TabType>('home');
 
   const tabs = [
@@ -52,6 +53,16 @@ export function TabNavigation({ family, userEmail: _userEmail, homeContent }: Ta
         flexShrink: 0
       }}
       className="desktop-nav">
+        {/* Header Content - Only shown in mobile landscape */}
+        <div className="sidebar-header" style={{
+          display: 'none', // Hidden by default, shown in mobile landscape via CSS
+          paddingBottom: '16px',
+          marginBottom: '16px',
+          borderBottom: '1px solid var(--color-border)'
+        }}>
+          {headerContent}
+        </div>
+        
         {tabs.map((tab) => (
           <button
             key={tab.id}
@@ -132,7 +143,7 @@ export function TabNavigation({ family, userEmail: _userEmail, homeContent }: Ta
 
       {/* Mobile Bottom Navigation - Fixed bottom area on mobile portrait */}
       <div style={{ 
-        background: 'var(--color-primary)',
+        background: '#e4e4e4',
         borderTop: 'none',
         boxShadow: '0 -2px 12px rgba(0, 0, 0, 0.08)',
         padding: '16px 24px',

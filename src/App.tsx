@@ -29,7 +29,8 @@ export default function App() {
         alignItems: 'center',
         boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
         flexShrink: 0
-      }}>
+      }}
+      className="app-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <img 
             src={logoImage} 
@@ -93,6 +94,38 @@ function SignOutButton() {
         </button>
       )}
     </>
+  );
+}
+
+function HeaderContent() {
+  return (
+    <div style={{ 
+      display: 'flex', 
+      justifyContent: 'space-between', 
+      alignItems: 'center',
+      width: '100%'
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <img 
+          src={logoImage} 
+          alt="MahlzeitMagier Logo" 
+          style={{ 
+            objectFit: 'contain',
+            width: '32px',
+            height: '32px'
+          }} 
+        />
+        <h1 style={{ 
+          fontSize: '18px', 
+          fontWeight: '600', 
+          color: 'var(--color-text)',
+          margin: 0
+        }}>
+          MahlzeitMagier
+        </h1>
+      </div>
+      <SignOutButton />
+    </div>
   );
 }
 
@@ -229,6 +262,7 @@ function Content() {
       family={currentUserData.family} 
       userEmail={currentUserData.user?.email}
       homeContent={<FamilyHomeContent family={currentUserData.family} userEmail={currentUserData.user?.email} />}
+      headerContent={<HeaderContent />}
     />
   );
 }

@@ -676,49 +676,7 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
             </div>
           );
         })}
-      </div>
-
-      {/* Floating Action Button für neue Mahlzeit */}
-      <div style={{ 
-        position: 'absolute',
-        bottom: showJumpButton ? '88px' : '32px',
-        right: '32px',
-        zIndex: 1000,
-        transition: 'bottom 0.3s ease'
-      }}>
-        <button
-          onClick={() => openCreateMeal(dateToString(new Date()))}
-          className="beos-button beos-button-primary"
-          style={{ 
-            padding: '16px',
-            borderRadius: '50%',
-            fontSize: '24px',
-            fontWeight: '600',
-            backgroundColor: 'var(--color-accent-orange)',
-            color: 'white',
-            border: 'none',
-            cursor: 'pointer',
-            width: '64px',
-            height: '64px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)',
-            transition: 'all 0.3s ease'
-          }}
-          title="Neue Mahlzeit planen"
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.1)';
-            e.currentTarget.style.backgroundColor = 'var(--color-accent-orange)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.backgroundColor = 'var(--color-accent-orange)';
-          }}
-        >
-          🍽️
-        </button>
-      </div>
+      </div>      
 
       {/* "Zu Heute" Button - nur anzeigen wenn heute nicht sichtbar ist */}
       {showJumpButton && (
