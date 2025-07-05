@@ -13,7 +13,7 @@ export const getUserPreferences = query({
     }),
     v.null()
   ),
-  handler: async (ctx, args) => {
+  handler: async (ctx) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
       return null;
