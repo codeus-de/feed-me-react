@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar } from './Calendar';
+import { VerticalCalendar } from './VerticalCalendar';
 
 interface TabNavigationProps {
   family: {
@@ -36,7 +36,7 @@ export function TabNavigation({ family: _family, userEmail: _userEmail, homeCont
     <div style={{ 
       height: '100%', 
       display: 'flex', 
-      flexDirection: 'column' 
+      flexDirection: 'column'
     }}>
       {/* Tab Navigation */}
       <div style={{ 
@@ -45,7 +45,8 @@ export function TabNavigation({ family: _family, userEmail: _userEmail, homeCont
         marginBottom: '24px',
         overflowX: 'auto',
         paddingBottom: '8px',
-        flexShrink: 0
+        flexShrink: 0,
+        justifyContent: 'space-evenly'
       }}>
         {tabs.map((tab) => (
           <button
@@ -61,7 +62,8 @@ export function TabNavigation({ family: _family, userEmail: _userEmail, homeCont
               fontWeight: '600',
               whiteSpace: 'nowrap',
               minWidth: 'auto',
-              transition: 'all 0.2s ease'
+              transition: 'all 0.2s ease',
+              boxShadow: 'none'
             }}
           >
             <span style={{ fontSize: '20px' }}>{tab.icon}</span>
@@ -87,7 +89,7 @@ export function TabNavigation({ family: _family, userEmail: _userEmail, homeCont
         )}
         
         {activeTab === 'calendar' && (
-          <Calendar />
+          <VerticalCalendar />
         )}
       </div>
     </div>

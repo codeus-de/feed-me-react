@@ -247,6 +247,34 @@ body {
   min-height: 0;
 }
 
+/* Vertical Calendar - Tage untereinander */
+.vertical-calendar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* Kein zusätzlicher Gap, da marginBottom in den Tagen bereits da ist */
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent-blue) transparent;
+}
+
+.vertical-calendar-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.vertical-calendar-container::-webkit-scrollbar-track {
+  background: var(--color-surface);
+  border-radius: 4px;
+}
+
+.vertical-calendar-container::-webkit-scrollbar-thumb {
+  background: var(--color-accent-blue);
+  border-radius: 4px;
+}
+
+.vertical-calendar-container::-webkit-scrollbar-thumb:hover {
+  background: #0052a3;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .calendar-container {
