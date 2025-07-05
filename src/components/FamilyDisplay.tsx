@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { handleConvexError } from "../utils/errorHandling";
+import { TabNavigation } from "./TabNavigation";
 
 interface FamilyDisplayProps {
   family: {
@@ -13,7 +14,7 @@ interface FamilyDisplayProps {
   userEmail?: string;
 }
 
-export function FamilyDisplay({ family, userEmail }: FamilyDisplayProps) {
+export function FamilyHomeContent({ family, userEmail }: FamilyDisplayProps) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copiedCode, setCopiedCode] = useState(false);
@@ -67,7 +68,14 @@ export function FamilyDisplay({ family, userEmail }: FamilyDisplayProps) {
   };
 
   return (
-    <div style={{ maxWidth: '600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '32px' }}>
+    <div style={{ 
+      maxWidth: '600px', 
+      margin: '0 auto', 
+      display: 'flex', 
+      flexDirection: 'column', 
+      gap: '32px',
+      padding: '32px'
+    }}>
       {/* Familie Header */}
       <div className="beos-card">
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '24px' }}>
@@ -247,5 +255,17 @@ export function FamilyDisplay({ family, userEmail }: FamilyDisplayProps) {
         </div>
       </div>
     </div>
+  );
+}
+
+export function FamilyDisplay({ family, userEmail }: FamilyDisplayProps) {
+  const homeContent = <FamilyHomeContent family={family} userEmail={userEmail} />;
+  
+  return (
+    <TabNavigation 
+      family={family}
+      userEmail={userEmail}
+      homeContent={homeContent}
+    />
   );
 }

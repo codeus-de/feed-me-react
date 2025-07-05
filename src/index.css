@@ -137,3 +137,154 @@ body {
   box-shadow: 0 4px 20px rgba(204, 0, 0, 0.25);
   border: none;
 }
+
+/* Calendar-specific styles */
+.calendar-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: flex;
+  gap: 24px;
+  padding: 16px;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent-blue) transparent;
+  align-items: flex-start;
+}
+
+.calendar-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.calendar-container::-webkit-scrollbar-track {
+  background: var(--color-surface);
+  border-radius: 4px;
+}
+
+.calendar-container::-webkit-scrollbar-thumb {
+  background: var(--color-accent-blue);
+  border-radius: 4px;
+}
+
+.calendar-container::-webkit-scrollbar-thumb:hover {
+  background: #0052a3;
+}
+
+.calendar-week {
+  min-width: 280px;
+  flex-shrink: 0;
+  background: var(--color-surface);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: fit-content;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.calendar-week::-webkit-scrollbar {
+  width: 6px;
+}
+
+.calendar-week::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
+
+.calendar-week::-webkit-scrollbar-thumb {
+  background: var(--color-accent-purple);
+  border-radius: 3px;
+}
+
+.calendar-week::-webkit-scrollbar-thumb:hover {
+  background: #7700a8;
+}
+
+.calendar-day {
+  background: var(--color-primary);
+  border-radius: 16px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.calendar-day:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.calendar-day.today {
+  background: var(--color-accent-blue);
+  color: white;
+  box-shadow: 0 4px 20px rgba(0, 102, 204, 0.3);
+}
+
+.calendar-day.today:hover {
+  transform: none;
+}
+
+/* Calendar week header - sticky when scrolling */
+.calendar-week-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--color-primary);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 16px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Calendar days container - scrollable */
+.calendar-days-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .calendar-container {
+    gap: 16px;
+    padding: 12px;
+  }
+  
+  .calendar-week {
+    min-width: 240px;
+    padding: 20px;
+  }
+  
+  .calendar-day {
+    padding: 14px;
+  }
+}
+
+/* Larger screens - show multiple weeks */
+@media (min-width: 1200px) {
+  .calendar-week {
+    min-width: 320px;
+  }
+}
+
+/* Ensure body takes full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 100%;
+}
+
+/* Larger screens - show multiple weeks */
+@media (min-width: 1200px) {
+  .calendar-week {
+    min-width: 320px;
+  }
+}

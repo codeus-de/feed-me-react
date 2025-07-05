@@ -10,18 +10,24 @@ import { api } from "../convex/_generated/api";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useState } from "react";
 import { CreateFamily } from "./components/CreateFamily";
-import { FamilyDisplay } from "./components/FamilyDisplay";
+import { TabNavigation } from "./components/TabNavigation";
+import { FamilyHomeContent } from "./components/FamilyDisplay";
 
 export default function App() {
   return (
-    <>
+    <div style={{ 
+      height: '100vh', 
+      display: 'flex', 
+      flexDirection: 'column' 
+    }}>
       <header style={{ 
         background: 'var(--color-primary)', 
         padding: '24px 32px',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)'
+        boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
+        flexShrink: 0
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <div className="beos-icon beos-icon-orange">🍽️</div>
@@ -37,9 +43,11 @@ export default function App() {
         <SignOutButton />
       </header>
       <main style={{ 
-        padding: '48px 32px',
-        minHeight: 'calc(100vh - 96px)',
-        background: 'var(--color-primary)'
+        flex: 1,
+        background: 'var(--color-primary)',
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column'
       }}>
         <Authenticated>
           <Content />
@@ -48,7 +56,7 @@ export default function App() {
           <SignInForm />
         </Unauthenticated>
       </main>
-    </>
+    </div>
   );
 }
 
@@ -75,7 +83,8 @@ function SignInForm() {
   const [flow, setFlow] = useState<"signIn" | "signUp">("signIn");
   const [error, setError] = useState<string | null>(null);
   return (
-    <div className="beos-card" style={{ maxWidth: '400px', margin: '0 auto' }}>
+    <div style={{ padding: '32px' }}>
+      <div className="beos-card" style={{ maxWidth: '400px', margin: '0 auto' }}>
       <div style={{ textAlign: 'center', marginBottom: '32px' }}>
         <div className="beos-icon beos-icon-blue" style={{ margin: '0 auto 16px' }}>🔐</div>
         <h2 style={{ fontSize: '24px', fontWeight: '600', marginBottom: '8px' }}>
@@ -170,6 +179,7 @@ function SignInForm() {
         )}
       </form>
     </div>
+    </div>
   );
 }
 
@@ -178,22 +188,29 @@ function Content() {
 
   if (currentUserData === undefined) {
     return (
-      <div className="mx-auto">
-        <p>loading... (consider a loading skeleton)</p>
+      <div style={{ padding: '32px' }}>
+        <div className="mx-auto">
+          <p>loading... (consider a loading skeleton)</p>
+        </div>
       </div>
     );
   }
 
   // Wenn der User nicht zu einer Familie gehört, zeige CreateFamily
   if (!currentUserData?.family) {
-    return <CreateFamily />;
+    return (
+      <div style={{ padding: '32px' }}>
+        <CreateFamily />
+      </div>
+    );
   }
 
-  // Ansonsten zeige die Familienansicht
+  // Ansonsten zeige die Familienansicht (TabNavigation)
   return (
-    <FamilyDisplay 
+    <TabNavigation 
       family={currentUserData.family} 
       userEmail={currentUserData.user?.email}
+      homeContent={<FamilyHomeContent family={currentUserData.family} userEmail={currentUserData.user?.email} />}
     />
   );
 }
