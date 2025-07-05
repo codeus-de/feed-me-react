@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { JoinFamily } from "./JoinFamily";
+import { handleConvexError } from "../utils/errorHandling";
 
 export function CreateFamily() {
   const [familyName, setFamilyName] = useState("");
   const [isCreating, setIsCreating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showJoinOption, setShowJoinOption] = useState(false);
   const createFamily = useMutation(api.myFunctions.createFamily);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -23,19 +26,36 @@ export function CreateFamily() {
         // Familie wurde erfolgreich erstellt
       })
       .catch((err) => {
-        setError(err instanceof Error ? err.message : "Fehler beim Erstellen der Familie");
+        const errorMessage = handleConvexError(err, "Fehler beim Erstellen der Familie");
+        setError(errorMessage);
       })
       .finally(() => {
         setIsCreating(false);
       });
   };
 
+  if (showJoinOption) {
+    return (
+      <div className="flex flex-col gap-6">
+        <JoinFamily />
+        <div className="text-center">
+          <button
+            onClick={() => setShowJoinOption(false)}
+            className="text-blue-600 dark:text-blue-400 hover:underline text-sm"
+          >
+            ← Zurück zur Familienerstellung
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-8 max-w-lg mx-auto">
       <div className="text-center">
         <h2 className="text-2xl font-bold mb-4">Familie erstellen</h2>
         <p className="text-gray-600 dark:text-gray-400">
-          Sie gehören noch zu keiner Familie. Erstellen Sie eine neue Familie, um zu beginnen!
+          Sie gehören noch zu keiner Familie. Erstellen Sie eine neue Familie oder treten Sie einer bestehenden bei!
         </p>
       </div>
 
@@ -72,6 +92,16 @@ export function CreateFamily() {
           {isCreating ? "Wird erstellt..." : "Familie erstellen"}
         </button>
       </form>
+
+      <div className="text-center">
+        <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">oder</p>
+        <button
+          onClick={() => setShowJoinOption(true)}
+          className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+        >
+          Einer bestehenden Familie beitreten
+        </button>
+      </div>
 
       <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-md p-4">
         <h3 className="font-medium text-blue-900 dark:text-blue-100 mb-2">

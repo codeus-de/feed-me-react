@@ -27,7 +27,10 @@ export default defineSchema({
   families: defineTable({
     name: v.string(), // Name der Familie (erforderlich)
     createdAt: v.number(), // Zeitstempel der Erstellung
-  }),
+    inviteCode: v.optional(v.string()), // Aktueller Einladungscode
+    inviteCodeExpiresAt: v.optional(v.number()), // Ablaufzeit des Codes
+  })
+    .index("inviteCode", ["inviteCode"]), // Index für Code-Lookup
   
   numbers: defineTable({
     value: v.number(),
