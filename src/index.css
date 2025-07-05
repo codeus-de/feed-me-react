@@ -275,6 +275,47 @@ body {
   background: #0052a3;
 }
 
+/* Responsive Navigation Styles */
+/* Desktop/Tablet - Show left sidebar, hide bottom navigation */
+@media (min-width: 769px) {
+  .desktop-nav {
+    display: flex !important;
+  }
+  .mobile-nav {
+    display: none !important;
+  }
+  .tab-container {
+    flex-direction: row !important;
+  }
+}
+
+/* Mobile Portrait - Hide left sidebar, show bottom navigation */
+@media (max-width: 768px) and (orientation: portrait) {
+  .desktop-nav {
+    display: none !important;
+  }
+  .mobile-nav {
+    display: flex !important;
+  }
+  .tab-container {
+    flex-direction: column !important;
+  }
+}
+
+/* Mobile Landscape - Show left sidebar (enough space) */
+@media (max-width: 768px) and (orientation: landscape) {
+  .desktop-nav {
+    display: flex !important;
+    width: 180px; /* Smaller sidebar for landscape */
+  }
+  .mobile-nav {
+    display: none !important;
+  }
+  .tab-container {
+    flex-direction: row !important;
+  }
+}
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .calendar-container {

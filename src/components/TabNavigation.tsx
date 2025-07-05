@@ -35,50 +35,85 @@ export function TabNavigation({ family, userEmail: _userEmail, homeContent }: Ta
   return (
     <div style={{ 
       height: '100%', 
-      display: 'flex', 
-      flexDirection: 'column'
-    }}>
-      {/* Tab Navigation */}
+      display: 'flex',
+      flexDirection: 'row' // Default: Desktop Layout
+    }}
+    className="tab-container">
+      {/* Left Sidebar Navigation - Desktop/Tablet */}
       <div style={{ 
-        display: 'flex', 
-        gap: '16px', 
-        marginBottom: '24px',
-        overflowX: 'auto',
-        paddingBottom: '8px',
-        flexShrink: 0,
-        justifyContent: 'space-evenly'
-      }}>
+        width: '200px',
+        background: 'var(--color-primary)',
+        borderRight: 'none',
+        boxShadow: '2px 0 12px rgba(0, 0, 0, 0.08)',
+        padding: '24px 16px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        flexShrink: 0
+      }}
+      className="desktop-nav">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={activeTab === tab.id ? 'beos-button beos-button-primary' : 'beos-button'}
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
-              padding: '16px 24px',
-              fontSize: '16px',
-              fontWeight: '600',
-              whiteSpace: 'nowrap',
-              minWidth: 'auto',
+              padding: '16px 20px',
+              background: activeTab === tab.id ? 'var(--color-surface)' : 'transparent',
+              border: 'none',
+              borderRadius: '16px',
+              cursor: 'pointer',
               transition: 'all 0.2s ease',
-              boxShadow: 'none'
+              outline: 'none',
+              textAlign: 'left',
+              width: '100%'
             }}
           >
-            <span style={{ fontSize: '20px' }}>{tab.icon}</span>
-            <span>{tab.label}</span>
+            {/* Icon */}
+            <div style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '12px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '20px',
+              background: activeTab === tab.id 
+                ? (tab.id === 'home' ? 'var(--color-accent-green)' : 'var(--color-accent-purple)')
+                : 'var(--color-surface)',
+              color: activeTab === tab.id ? 'white' : 'var(--color-text)',
+              transition: 'all 0.2s ease',
+              boxShadow: activeTab === tab.id 
+                ? '0 4px 16px rgba(0, 0, 0, 0.2)' 
+                : '0 2px 8px rgba(0, 0, 0, 0.1)',
+              flexShrink: 0
+            }}>
+              {tab.icon}
+            </div>
+            
+            {/* Label */}
+            <span style={{
+              fontSize: '16px',
+              fontWeight: activeTab === tab.id ? '600' : '500',
+              color: activeTab === tab.id ? 'var(--color-text)' : 'var(--color-text-subtle)',
+              transition: 'all 0.2s ease'
+            }}>
+              {tab.label}
+            </span>
           </button>
         ))}
       </div>
 
-      {/* Tab Content */}
+      {/* Main Content Area */}
       <div style={{ 
         flex: 1,
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column'
-      }}>
+      }}
+      className="main-content">
         {activeTab === 'home' && (
           <div style={{ 
             flex: 1,
@@ -89,8 +124,75 @@ export function TabNavigation({ family, userEmail: _userEmail, homeContent }: Ta
         )}
         
         {activeTab === 'calendar' && (
-          <VerticalCalendar familyId={family._id} />
+          <div style={{ flex: 1, overflow: 'hidden' }}>
+            <VerticalCalendar familyId={family._id} />
+          </div>
         )}
+      </div>
+
+      {/* Mobile Bottom Navigation - Fixed bottom area on mobile portrait */}
+      <div style={{ 
+        background: 'var(--color-primary)',
+        borderTop: 'none',
+        boxShadow: '0 -2px 12px rgba(0, 0, 0, 0.08)',
+        padding: '16px 24px',
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '24px',
+        flexShrink: 0
+      }}
+      className="mobile-nav">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '12px 16px',
+              background: 'transparent',
+              border: 'none',
+              borderRadius: '16px',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+              minWidth: '80px',
+              outline: 'none'
+            }}
+          >
+            {/* Icon */}
+            <div style={{
+              width: '48px',
+              height: '48px',
+              borderRadius: '12px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '22px',
+              background: activeTab === tab.id 
+                ? (tab.id === 'home' ? 'var(--color-accent-green)' : 'var(--color-accent-purple)')
+                : 'var(--color-surface)',
+              color: activeTab === tab.id ? 'white' : 'var(--color-text)',
+              transition: 'all 0.2s ease',
+              boxShadow: activeTab === tab.id 
+                ? '0 4px 16px rgba(0, 0, 0, 0.2)' 
+                : '0 2px 8px rgba(0, 0, 0, 0.1)'
+            }}>
+              {tab.icon}
+            </div>
+            
+            {/* Label */}
+            <span style={{
+              fontSize: '12px',
+              fontWeight: activeTab === tab.id ? '600' : '500',
+              color: activeTab === tab.id ? 'var(--color-text)' : 'var(--color-text-subtle)',
+              transition: 'all 0.2s ease'
+            }}>
+              {tab.label}
+            </span>
+          </button>
+        ))}
       </div>
     </div>
   );
