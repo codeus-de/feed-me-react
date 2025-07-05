@@ -1,22 +1,139 @@
 @import "tailwindcss";
 
-@theme {
-  --color-light: #ffffff;
-  --color-dark: #171717;
+/* BeOS-inspired design system */
+:root {
+  --color-primary: #ffffff;        /* Weiß für Haupthintergrund */
+  --color-surface: #f5f5f5;        /* Helles Grau für Oberflächen */
+  --color-surface-hover: #e8e8e8;  /* Dunkleres Grau für Hover */
+  --color-text: #1a1a1a;           /* Dunkler Text für hohen Kontrast */
+  --color-text-subtle: #666666;    /* Subtiler Text */
+  --color-accent-blue: #0066cc;
+  --color-accent-green: #00aa44;
+  --color-accent-orange: #ff6600;
+  --color-accent-red: #cc0000;
+  --color-accent-purple: #8800cc;
 }
 
-@media (prefers-color-scheme: dark) {
-  body {
-    color: var(--color-light);
-    background: var(--color-dark);
-    font-family: Arial, Helvetica, sans-serif;
-  }
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: light) {
-  body {
-    color: var(--color-dark);
-    background: var(--color-light);
-    font-family: Arial, Helvetica, sans-serif;
-  }
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-primary);
+  color: var(--color-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+}
+
+/* BeOS-style button - completely border-free */
+.beos-button {
+  background: var(--color-surface);
+  border: none;
+  border-radius: 16px;
+  padding: 18px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  outline: none;
+}
+
+.beos-button:hover {
+  background: var(--color-surface-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.18);
+}
+
+.beos-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.beos-button-primary {
+  background: var(--color-accent-blue);
+  color: white;
+}
+
+.beos-button-primary:hover {
+  background: #0052a3;
+}
+
+.beos-button:disabled {
+  background: var(--color-surface);
+  color: var(--color-text-subtle);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  opacity: 0.6;
+}
+
+/* BeOS-style input - completely border-free */
+.beos-input {
+  background: var(--color-surface);
+  border: none;
+  border-radius: 16px;
+  padding: 18px 24px;
+  font-size: 16px;
+  color: var(--color-text);
+  width: 100%;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.beos-input:focus {
+  background: var(--color-surface-hover);
+}
+
+.beos-input::placeholder {
+  color: var(--color-text-subtle);
+}
+
+/* BeOS-style card - elevated surface */
+.beos-card {
+  background: var(--color-primary);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+  border: none;
+}
+
+/* Icon styles - vibrant and contrasting */
+.beos-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.beos-icon-blue { background: var(--color-accent-blue); color: white; }
+.beos-icon-green { background: var(--color-accent-green); color: white; }
+.beos-icon-orange { background: var(--color-accent-orange); color: white; }
+.beos-icon-red { background: var(--color-accent-red); color: white; }
+.beos-icon-purple { background: var(--color-accent-purple); color: white; }
+
+/* Info box style */
+.beos-info-box {
+  background: var(--color-surface);
+  border-radius: 20px;
+  padding: 28px;
+  border: none;
+}
+
+/* Error box style */
+.beos-error-box {
+  background: var(--color-accent-red);
+  color: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(204, 0, 0, 0.25);
+  border: none;
 }

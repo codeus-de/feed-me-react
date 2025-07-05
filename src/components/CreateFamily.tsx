@@ -36,12 +36,19 @@ export function CreateFamily() {
 
   if (showJoinOption) {
     return (
-      <div className="flex flex-col gap-6">
+      <div style={{ maxWidth: '500px', margin: '0 auto' }}>
         <JoinFamily />
-        <div className="text-center">
+        <div style={{ textAlign: 'center', marginTop: '32px' }}>
           <button
             onClick={() => setShowJoinOption(false)}
-            className="text-blue-600 dark:text-blue-400 hover:underline text-sm"
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'var(--color-accent-blue)',
+              textDecoration: 'underline',
+              cursor: 'pointer',
+              fontSize: '16px'
+            }}
           >
             ← Zurück zur Familienerstellung
           </button>
@@ -51,19 +58,40 @@ export function CreateFamily() {
   }
 
   return (
-    <div className="flex flex-col gap-8 max-w-lg mx-auto">
-      <div className="text-center">
-        <h2 className="text-2xl font-bold mb-4">Familie erstellen</h2>
-        <p className="text-gray-600 dark:text-gray-400">
+    <div className="beos-card" style={{ maxWidth: '500px', margin: '0 auto' }}>
+      {/* Header mit Icon */}
+      <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+        <div className="beos-icon beos-icon-green" style={{ margin: '0 auto 24px' }}>👨‍👩‍👧‍👦</div>
+        <h2 style={{ 
+          fontSize: '28px', 
+          fontWeight: '600', 
+          marginBottom: '12px',
+          color: 'var(--color-text)'
+        }}>
+          Familie erstellen
+        </h2>
+        <p style={{ 
+          color: 'var(--color-text-subtle)', 
+          fontSize: '16px',
+          lineHeight: '1.5',
+          margin: 0
+        }}>
           Sie gehören noch zu keiner Familie. Erstellen Sie eine neue Familie oder treten Sie einer bestehenden bei!
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div>
+      {/* Formular */}
+      <form onSubmit={handleSubmit} style={{ marginBottom: '48px' }}>
+        <div style={{ marginBottom: '32px' }}>
           <label 
             htmlFor="familyName" 
-            className="block text-sm font-medium mb-2"
+            style={{
+              display: 'block',
+              fontSize: '16px',
+              fontWeight: '500',
+              marginBottom: '12px',
+              color: 'var(--color-text)'
+            }}
           >
             Familienname
           </label>
@@ -73,45 +101,96 @@ export function CreateFamily() {
             value={familyName}
             onChange={(e) => setFamilyName(e.target.value)}
             placeholder="z.B. Familie Schmidt"
-            className="w-full bg-light dark:bg-dark text-dark dark:text-light rounded-md p-3 border-2 border-slate-200 dark:border-slate-800 focus:border-blue-500 dark:focus:border-blue-400 outline-none"
+            className="beos-input"
             disabled={isCreating}
           />
         </div>
 
         {error && (
-          <div className="bg-red-500/20 border-2 border-red-500/50 rounded-md p-3">
-            <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
+          <div className="beos-error-box" style={{ marginBottom: '24px', fontSize: '14px' }}>
+            {error}
           </div>
         )}
 
         <button
           type="submit"
           disabled={isCreating || !familyName.trim()}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-3 px-6 rounded-md transition-colors duration-200"
+          className="beos-button beos-button-primary"
+          style={{ width: '100%', marginBottom: '32px' }}
         >
           {isCreating ? "Wird erstellt..." : "Familie erstellen"}
         </button>
       </form>
 
-      <div className="text-center">
-        <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">oder</p>
+      {/* Alternative Option */}
+      <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+        <p style={{ 
+          color: 'var(--color-text-subtle)', 
+          fontSize: '14px', 
+          marginBottom: '16px'
+        }}>
+          oder
+        </p>
         <button
           onClick={() => setShowJoinOption(true)}
-          className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+          className="beos-button"
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
         >
+          <span>🔗</span>
           Einer bestehenden Familie beitreten
         </button>
       </div>
 
-      <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-md p-4">
-        <h3 className="font-medium text-blue-900 dark:text-blue-100 mb-2">
-          Was passiert als nächstes?
-        </h3>
-        <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
-          <li>• Sie werden automatisch Mitglied der neuen Familie</li>
-          <li>• Sie können andere Familienmitglieder einladen</li>
-          <li>• Alle Familienmitglieder können gemeinsam Daten verwalten</li>
-        </ul>
+      {/* Info-Bereich */}
+      <div className="beos-info-box">
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', marginBottom: '16px' }}>
+          <div className="beos-icon beos-icon-blue" style={{ 
+            width: '32px', 
+            height: '32px', 
+            fontSize: '16px',
+            marginBottom: 0,
+            flexShrink: 0
+          }}>
+            ℹ️
+          </div>
+          <div>
+            <h3 style={{
+              fontSize: '18px',
+              fontWeight: '600',
+              color: 'var(--color-text)',
+              margin: '0 0 12px 0'
+            }}>
+              Was passiert als nächstes?
+            </h3>
+          </div>
+        </div>
+        
+        <div style={{ paddingLeft: '44px' }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ color: 'var(--color-accent-green)', fontSize: '16px' }}>✓</span>
+              <span style={{ fontSize: '14px', color: 'var(--color-text)' }}>
+                Sie werden automatisch Mitglied der neuen Familie
+              </span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ color: 'var(--color-accent-green)', fontSize: '16px' }}>✓</span>
+              <span style={{ fontSize: '14px', color: 'var(--color-text)' }}>
+                Sie können andere Familienmitglieder einladen
+              </span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ color: 'var(--color-accent-green)', fontSize: '16px' }}>✓</span>
+              <span style={{ fontSize: '14px', color: 'var(--color-text)' }}>
+                Alle Familienmitglieder können gemeinsam Daten verwalten
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -67,50 +67,110 @@ export function FamilyDisplay({ family, userEmail }: FamilyDisplayProps) {
   };
 
   return (
-    <div className="flex flex-col gap-6 max-w-lg mx-auto">
+    <div style={{ maxWidth: '600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '32px' }}>
       {/* Familie Header */}
-      <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md p-4">
-        <h2 className="text-green-800 dark:text-green-200 font-bold text-xl mb-2">
-          Familie: {family.name}
-        </h2>
-        <p className="text-green-700 dark:text-green-300 text-sm">
-          Willkommen {userEmail ?? "Anonymous"}!
-        </p>
+      <div className="beos-card">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '24px' }}>
+          <div className="beos-icon beos-icon-green">👨‍👩‍👧‍👦</div>
+          <div>
+            <h2 style={{ 
+              fontSize: '24px', 
+              fontWeight: '600', 
+              margin: '0 0 8px 0',
+              color: 'var(--color-text)'
+            }}>
+              Familie: {family.name}
+            </h2>
+            <p style={{ 
+              color: 'var(--color-text-subtle)', 
+              fontSize: '16px',
+              margin: 0
+            }}>
+              Willkommen {userEmail ?? "Anonymous"}!
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Einladungscode Sektion */}
-      <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-md p-4">
-        <h3 className="font-bold text-blue-900 dark:text-blue-100 mb-3">
-          Familienmitglieder einladen
-        </h3>
+      <div className="beos-card">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
+          <div className="beos-icon beos-icon-blue" style={{ marginBottom: 0 }}>📧</div>
+          <h3 style={{ 
+            fontSize: '20px', 
+            fontWeight: '600', 
+            margin: 0,
+            color: 'var(--color-text)'
+          }}>
+            Familienmitglieder einladen
+          </h3>
+        </div>
         
         {isCodeValid ? (
-          <div className="space-y-3">
-            <div className="bg-white dark:bg-gray-800 border border-blue-200 dark:border-blue-700 rounded-md p-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-mono text-lg font-bold text-blue-800 dark:text-blue-200">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <div className="beos-info-box" style={{ padding: '24px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px' }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ marginBottom: '8px' }}>
+                    <span style={{ 
+                      fontSize: '12px', 
+                      color: 'var(--color-text-subtle)', 
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px',
+                      fontWeight: '500'
+                    }}>
+                      Einladungscode
+                    </span>
+                  </div>
+                  <p style={{ 
+                    fontFamily: 'Monaco, Consolas, monospace', 
+                    fontSize: '20px', 
+                    fontWeight: '700',
+                    color: 'var(--color-text)',
+                    margin: '0 0 8px 0',
+                    letterSpacing: '1px'
+                  }}>
                     {family.inviteCode}
                   </p>
-                  <p className="text-sm text-blue-600 dark:text-blue-400">
+                  <p style={{ 
+                    fontSize: '14px', 
+                    color: 'var(--color-accent-blue)',
+                    margin: 0,
+                    fontWeight: '500'
+                  }}>
                     {family.inviteCodeExpiresAt && formatTimeRemaining(family.inviteCodeExpiresAt)}
                   </p>
                 </div>
                 <button
                   onClick={handleCopyCode}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm transition-colors"
+                  className="beos-button beos-button-primary"
+                  style={{ 
+                    padding: '12px 20px',
+                    fontSize: '14px',
+                    background: copiedCode ? 'var(--color-accent-green)' : 'var(--color-accent-blue)'
+                  }}
                 >
-                  {copiedCode ? "Kopiert!" : "Kopieren"}
+                  {copiedCode ? "✓ Kopiert!" : "📋 Kopieren"}
                 </button>
               </div>
             </div>
-            <p className="text-sm text-blue-700 dark:text-blue-300">
+            <p style={{ 
+              fontSize: '14px', 
+              color: 'var(--color-text-subtle)',
+              margin: 0,
+              textAlign: 'center'
+            }}>
               Teilen Sie diesen Code mit Familienmitgliedern, damit sie beitreten können.
             </p>
           </div>
         ) : (
-          <div className="space-y-3">
-            <p className="text-blue-700 dark:text-blue-300 text-sm">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <p style={{ 
+              color: 'var(--color-text-subtle)', 
+              fontSize: '16px',
+              margin: 0,
+              textAlign: 'center'
+            }}>
               {family.inviteCode 
                 ? "Der Einladungscode ist abgelaufen. Erstellen Sie einen neuen Code." 
                 : "Erstellen Sie einen Einladungscode, um neue Mitglieder einzuladen."
@@ -119,30 +179,72 @@ export function FamilyDisplay({ family, userEmail }: FamilyDisplayProps) {
             <button
               onClick={handleGenerateCode}
               disabled={isGenerating}
-              className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-2 px-4 rounded transition-colors"
+              className="beos-button beos-button-primary"
+              style={{ 
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
+              }}
             >
+              <span>🔗</span>
               {isGenerating ? "Wird erstellt..." : "Neuen Code erstellen"}
             </button>
           </div>
         )}
 
         {error && (
-          <div className="mt-3 bg-red-500/20 border border-red-500/50 rounded-md p-3">
-            <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
+          <div className="beos-error-box" style={{ marginTop: '24px' }}>
+            {error}
           </div>
         )}
       </div>
 
       {/* Info Box */}
-      <div className="bg-gray-50 dark:bg-gray-900/20 border border-gray-200 dark:border-gray-800 rounded-md p-4">
-        <h4 className="font-medium text-gray-800 dark:text-gray-200 mb-2">
-          So funktioniert's:
-        </h4>
-        <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-          <li>• Einladungscodes sind 1 Stunde gültig</li>
-          <li>• Neue Mitglieder können den Code verwenden, um beizutreten</li>
-          <li>• Sie können jederzeit einen neuen Code erstellen</li>
-        </ul>
+      <div className="beos-info-box">
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', marginBottom: '20px' }}>
+          <div className="beos-icon beos-icon-purple" style={{ 
+            width: '40px', 
+            height: '40px', 
+            fontSize: '20px',
+            marginBottom: 0,
+            flexShrink: 0
+          }}>
+            💡
+          </div>
+          <h4 style={{ 
+            fontSize: '18px', 
+            fontWeight: '600', 
+            color: 'var(--color-text)',
+            margin: 0
+          }}>
+            So funktioniert's:
+          </h4>
+        </div>
+        
+        <div style={{ paddingLeft: '56px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ color: 'var(--color-accent-blue)', fontSize: '16px' }}>⏰</span>
+              <span style={{ fontSize: '14px', color: 'var(--color-text)' }}>
+                Einladungscodes sind 1 Stunde gültig
+              </span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ color: 'var(--color-accent-green)', fontSize: '16px' }}>👥</span>
+              <span style={{ fontSize: '14px', color: 'var(--color-text)' }}>
+                Neue Mitglieder können den Code verwenden, um beizutreten
+              </span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ color: 'var(--color-accent-orange)', fontSize: '16px' }}>🔄</span>
+              <span style={{ fontSize: '14px', color: 'var(--color-text)' }}>
+                Sie können jederzeit einen neuen Code erstellen
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -15,11 +15,32 @@ import { FamilyDisplay } from "./components/FamilyDisplay";
 export default function App() {
   return (
     <>
-      <header className="sticky top-0 z-10 bg-light dark:bg-dark p-4 border-b-2 border-slate-200 dark:border-slate-800">
-        Feed Me!
+      <header style={{ 
+        background: 'var(--color-primary)', 
+        padding: '24px 32px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div className="beos-icon beos-icon-orange">🍽️</div>
+          <h1 style={{ 
+            fontSize: '24px', 
+            fontWeight: '600', 
+            color: 'var(--color-text)',
+            margin: 0
+          }}>
+            Feed Me!
+          </h1>
+        </div>
         <SignOutButton />
       </header>
-      <main className="p-8 flex flex-col gap-16">
+      <main style={{ 
+        padding: '48px 32px',
+        minHeight: 'calc(100vh - 96px)',
+        background: 'var(--color-primary)'
+      }}>
         <Authenticated>
           <Content />
         </Authenticated>
@@ -38,10 +59,11 @@ function SignOutButton() {
     <>
       {isAuthenticated && (
         <button
-          className="bg-slate-200 dark:bg-slate-800 text-dark dark:text-light rounded-md px-2 py-1"
+          className="beos-button"
           onClick={() => void signOut()}
+          style={{ padding: '12px 20px', fontSize: '14px' }}
         >
-          Sign out
+          Abmelden
         </button>
       )}
     </>
@@ -53,10 +75,19 @@ function SignInForm() {
   const [flow, setFlow] = useState<"signIn" | "signUp">("signIn");
   const [error, setError] = useState<string | null>(null);
   return (
-    <div className="flex flex-col gap-8 w-96 mx-auto">
-      <p>Log in to see the numbers</p>
+    <div className="beos-card" style={{ maxWidth: '400px', margin: '0 auto' }}>
+      <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+        <div className="beos-icon beos-icon-blue" style={{ margin: '0 auto 16px' }}>🔐</div>
+        <h2 style={{ fontSize: '24px', fontWeight: '600', marginBottom: '8px' }}>
+          Anmelden
+        </h2>
+        <p style={{ color: 'var(--color-text-subtle)', margin: 0 }}>
+          Melde dich an, um deine Familie zu verwalten
+        </p>
+      </div>
+      
       <form
-        className="flex flex-col gap-2"
+        style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
         onSubmit={(e) => {
           e.preventDefault();
           const formData = new FormData(e.target as HTMLFormElement);
@@ -66,42 +97,75 @@ function SignInForm() {
           });
         }}
       >
-        <input
-          className="bg-light dark:bg-dark text-dark dark:text-light rounded-md p-2 border-2 border-slate-200 dark:border-slate-800"
-          type="email"
-          name="email"
-          placeholder="Email"
-        />
-        <input
-          className="bg-light dark:bg-dark text-dark dark:text-light rounded-md p-2 border-2 border-slate-200 dark:border-slate-800"
-          type="password"
-          name="password"
-          placeholder="Password"
-        />
+        <div>
+          <label style={{ 
+            display: 'block', 
+            fontSize: '14px', 
+            fontWeight: '500', 
+            marginBottom: '8px',
+            color: 'var(--color-text)'
+          }}>
+            E-Mail
+          </label>
+          <input
+            className="beos-input"
+            type="email"
+            name="email"
+            placeholder="deine@email.com"
+          />
+        </div>
+        
+        <div>
+          <label style={{ 
+            display: 'block', 
+            fontSize: '14px', 
+            fontWeight: '500', 
+            marginBottom: '8px',
+            color: 'var(--color-text)'
+          }}>
+            Passwort
+          </label>
+          <input
+            className="beos-input"
+            type="password"
+            name="password"
+            placeholder="Dein Passwort"
+          />
+        </div>
+
         <button
-          className="bg-dark dark:bg-light text-light dark:text-dark rounded-md"
+          className="beos-button beos-button-primary"
           type="submit"
         >
-          {flow === "signIn" ? "Sign in" : "Sign up"}
+          {flow === "signIn" ? "Anmelden" : "Registrieren"}
         </button>
-        <div className="flex flex-row gap-2">
-          <span>
+        
+        <div style={{ textAlign: 'center' }}>
+          <span style={{ color: 'var(--color-text-subtle)', fontSize: '14px' }}>
             {flow === "signIn"
-              ? "Don't have an account?"
-              : "Already have an account?"}
+              ? "Noch kein Konto?"
+              : "Bereits registriert?"}
           </span>
-          <span
-            className="text-dark dark:text-light underline hover:no-underline cursor-pointer"
+          {" "}
+          <button
+            type="button"
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'var(--color-accent-blue)',
+              textDecoration: 'underline',
+              cursor: 'pointer',
+              fontSize: '14px'
+            }}
             onClick={() => setFlow(flow === "signIn" ? "signUp" : "signIn")}
           >
-            {flow === "signIn" ? "Sign up instead" : "Sign in instead"}
-          </span>
+            {flow === "signIn" ? "Jetzt registrieren" : "Hier anmelden"}
+          </button>
         </div>
+        
         {error && (
-          <div className="bg-red-500/20 border-2 border-red-500/50 rounded-md p-2">
-            <p className="text-dark dark:text-light font-mono text-xs">
-              Error signing in: {error}
-            </p>
+          <div className="beos-error-box">
+            Fehler beim Anmelden: {error}
           </div>
         )}
       </form>
