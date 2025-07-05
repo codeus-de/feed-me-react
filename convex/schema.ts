@@ -8,7 +8,7 @@ import { authTables } from "@convex-dev/auth/server";
 export default defineSchema({
   ...authTables,
   
-  // Erweitere die users Tabelle um familyId
+  // Erweitere die users Tabelle um familyId und Präferenzen
   users: defineTable({
     name: v.optional(v.string()),
     image: v.optional(v.string()),
@@ -18,6 +18,9 @@ export default defineSchema({
     phoneVerificationTime: v.optional(v.number()),
     isAnonymous: v.optional(v.boolean()),
     familyId: v.optional(v.id("families")), // Referenz zur Familie
+    preferences: v.optional(v.string()), // Lieblingsessen (mehrzeilig)
+    dislikes: v.optional(v.string()), // Mag ich nicht so gerne (mehrzeilig)
+    allergies: v.optional(v.string()), // Allergien (mehrzeilig)
   })
     .index("email", ["email"])
     .index("phone", ["phone"])

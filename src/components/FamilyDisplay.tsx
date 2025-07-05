@@ -3,6 +3,7 @@ import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { handleConvexError } from "../utils/errorHandling";
 import { TabNavigation } from "./TabNavigation";
+import { UserPreferences } from "./UserPreferences";
 
 interface FamilyDisplayProps {
   family: {
@@ -254,6 +255,9 @@ export function FamilyHomeContent({ family, userEmail }: FamilyDisplayProps) {
           </div>
         </div>
       </div>
+
+      {/* Nutzerpräferenzen */}
+      <UserPreferences />
     </div>
   );
 }

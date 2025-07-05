@@ -432,7 +432,8 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
                   marginBottom: '16px',
                   padding: '24px',
                   textAlign: 'center',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  boxShadow: '0 8px 12px rgba(0, 0, 0, 0.12)'
                 }}
                 onClick={() => {
                   if (day.pseudoType === 'load-past') {
@@ -486,7 +487,8 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
                 padding: '20px',
                 backgroundColor: day.isToday ? 'var(--color-accent-blue)' : 'var(--color-primary)',
                 color: day.isToday ? 'white' : 'var(--color-text)',
-                opacity: day.isCurrentMonth ? 1 : 0.7
+                opacity: day.isCurrentMonth ? 1 : 0.7,
+                boxShadow: '0 8px 12px rgba(0, 0, 0, 0.12)'
               }}
             >
               {/* Datum-Header */}
