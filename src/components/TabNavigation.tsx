@@ -14,7 +14,7 @@ interface TabNavigationProps {
 
 type TabType = 'home' | 'calendar';
 
-export function TabNavigation({ family: _family, userEmail: _userEmail, homeContent }: TabNavigationProps) {
+export function TabNavigation({ family, userEmail: _userEmail, homeContent }: TabNavigationProps) {
   const [activeTab, setActiveTab] = useState<TabType>('home');
 
   const tabs = [
@@ -89,7 +89,7 @@ export function TabNavigation({ family: _family, userEmail: _userEmail, homeCont
         )}
         
         {activeTab === 'calendar' && (
-          <VerticalCalendar />
+          <VerticalCalendar familyId={family._id} />
         )}
       </div>
     </div>
