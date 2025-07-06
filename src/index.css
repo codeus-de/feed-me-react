@@ -25,7 +25,7 @@
   --color-text-subtle: #d9d9d9;    /* Subtiler Text */
   --color-accent-blue: #0066cc;
   --color-accent-green: #008d38;
-  --color-accent-orange: #ff6600;
+  --color-accent-orange: #f18d2a;
   --color-accent-red: #cc0000;
   --color-accent-purple: #8800cc;
 }
@@ -507,9 +507,16 @@ input, textarea, [contenteditable] {
   will-change: scroll-position;
 }
 
-/* Larger screens - show multiple weeks */
-@media (min-width: 1200px) {
-  .calendar-week {
-    min-width: 320px;
+/* Header Navigation Responsive Styles */
+@media (min-width: 768px) {
+  .nav-label {
+    display: inline !important;
+  }
+}
+
+/* Mobile - only show icons */
+@media (max-width: 767px) {
+  .nav-label {
+    display: none !important;
   }
 }

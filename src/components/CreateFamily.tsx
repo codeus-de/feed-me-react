@@ -221,7 +221,7 @@ export function CreateFamily() {
             </div>
           </div>
           
-          <div style={{ paddingLeft: '44px' }}>
+          <div style={{ paddingLeft: '0px' }}>
             <div style={{
               display: 'flex',
               flexDirection: 'column',

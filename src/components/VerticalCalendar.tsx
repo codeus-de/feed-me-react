@@ -668,26 +668,7 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
                       display: 'flex', 
                       gap: '8px',
                       marginTop: '8px' 
-                    }}>
-                      <button
-                        onClick={() => openCreateMeal(dateStr)}
-                        className="beos-button"
-                        style={{
-                          padding: '8px 16px',
-                          fontSize: '14px',
-                          backgroundColor: day.isToday ? 'rgba(255,255,255,0.1)' : 'var(--color-surface)',
-                          color: day.isToday ? 'white' : 'var(--color-text)',
-                          border: 'none',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          flex: 1,
-                          justifyContent: 'center'
-                        }}
-                      >
-                        <span>➕</span>
-                        <span>Manuell</span>
-                      </button>
+                    }}>                      
                       
                       <button
                         onClick={() => openAISuggestion(dateStr)}
@@ -695,7 +676,7 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
                         style={{
                           padding: '8px 16px',
                           fontSize: '14px',
-                          backgroundColor: day.isToday ? 'rgba(255,255,255,0.15)' : 'var(--color-accent-purple)',
+                          backgroundColor: 'var(--color-accent-orange)',
                           color: 'white',
                           border: 'none',
                           display: 'flex',
@@ -733,25 +714,6 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
                       gap: '8px',
                       width: '100%' 
                     }}>
-                      <button
-                        onClick={() => openCreateMeal(dateStr)}
-                        className="beos-button beos-button-primary"
-                        style={{
-                          padding: '8px 16px',
-                          fontSize: '14px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          backgroundColor: day.isToday ? 'rgba(255,255,255,0.2)' : 'var(--color-accent-green)',
-                          color: 'white',
-                          border: 'none',
-                          flex: 1,
-                          justifyContent: 'center'
-                        }}
-                      >
-                        <span>➕</span>
-                        <span>Manuell planen</span>
-                      </button>
                       
                       <button
                         onClick={() => openAISuggestion(dateStr)}
@@ -762,7 +724,7 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
                           display: 'flex',
                           alignItems: 'center',
                           gap: '8px',
-                          backgroundColor: day.isToday ? 'rgba(255,255,255,0.2)' : 'var(--color-accent-purple)',
+                          backgroundColor: 'var(--color-accent-orange)',
                           color: 'white',
                           border: 'none',
                           flex: 1,
@@ -841,7 +803,6 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
           padding: '16px'
         }}>
           <div style={{
-            backgroundColor: 'var(--color-primary)',
             borderRadius: '20px',
             maxHeight: '90vh',
             overflowY: 'auto',
@@ -875,7 +836,6 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
           padding: '16px'
         }}>
           <div style={{
-            backgroundColor: 'var(--color-primary)',
             borderRadius: '20px',
             maxHeight: '90vh',
             overflowY: 'auto',

@@ -10,29 +10,39 @@ import { api } from "../convex/_generated/api";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useState } from "react";
 import { CreateFamily } from "./components/CreateFamily";
-import { TabNavigation } from "./components/TabNavigation";
+import { VerticalCalendar } from "./components/VerticalCalendar";
 import { FamilyHomeContent } from "./components/FamilyDisplay";
 import { PWAInstallPrompt } from "./components/PWAInstallPrompt";
 import logoImage from "./assets/koobi-96.png";
 
 export default function App() {
+  const [activeView, setActiveView] = useState<'calendar' | 'settings'>('calendar');
+  
   return (
     <div style={{ 
       height: '100vh', 
       display: 'flex', 
       flexDirection: 'column' 
     }}>
-      <header style={{ 
-        background: 'rgb(0 0 0 / 48%)', 
-        padding: '24px 32px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
-        flexShrink: 0
-      }}
-      className="app-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <Authenticated>
+        <HeaderWithNavigation activeView={activeView} setActiveView={setActiveView} />
+        <main style={{ 
+          flex: 1,
+          overflow: 'hidden'
+        }}>
+          <Content activeView={activeView} />
+        </main>
+      </Authenticated>
+      <Unauthenticated>
+        <header style={{ 
+          background: 'rgb(0 0 0 / 48%)', 
+          padding: '24px 32px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
+          flexShrink: 0
+        }}>
           <img 
             src={logoImage} 
             alt="Koobi Logo" 
@@ -40,23 +50,17 @@ export default function App() {
               objectFit: 'contain'
             }} 
           />
-        </div>
-        <SignOutButton />
-      </header>
-      <main style={{ 
-        flex: 1,
-        overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'column'
-      }}>
-        <Authenticated>
-          <Content />
-        </Authenticated>
-        <Unauthenticated>
+        </header>
+        <main style={{ 
+          flex: 1,
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
           <SignInForm />
-        </Unauthenticated>
-        <PWAInstallPrompt />
-      </main>
+        </main>
+      </Unauthenticated>
+      <PWAInstallPrompt />
     </div>
   );
 }
@@ -87,38 +91,6 @@ function SignOutButton() {
         </button>
       )}
     </>
-  );
-}
-
-function HeaderContent() {
-  return (
-    <div style={{ 
-      display: 'flex', 
-      justifyContent: 'space-between', 
-      alignItems: 'center',
-      width: '100%'
-    }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-        <img 
-          src={logoImage} 
-          alt="Koobi Logo" 
-          style={{ 
-            objectFit: 'contain',
-            width: '32px',
-            height: '32px'
-          }} 
-        />
-        <h1 style={{ 
-          fontSize: '18px', 
-          fontWeight: '600', 
-          color: 'var(--color-text)',
-          margin: 0
-        }}>
-          Koobi
-        </h1>
-      </div>
-      <SignOutButton />
-    </div>
   );
 }
 
@@ -227,7 +199,7 @@ function SignInForm() {
   );
 }
 
-function Content() {
+function Content({ activeView }: { activeView: 'calendar' | 'settings' }) {
   const currentUserData = useQuery(api.myFunctions.getCurrentUser);
 
   if (currentUserData === undefined) {
@@ -243,19 +215,128 @@ function Content() {
   // Wenn der User nicht zu einer Familie gehört, zeige CreateFamily
   if (!currentUserData?.family) {
     return (
-      <div style={{ padding: '32px' }}>
+      <div style={{ overflow: 'auto', height: '100%' }}>
         <CreateFamily />
       </div>
     );
   }
 
-  // Ansonsten zeige die Familienansicht (TabNavigation)
+  // Content basierend auf aktiver Ansicht
   return (
-    <TabNavigation 
-      family={currentUserData.family} 
-      userEmail={currentUserData.user?.email}
-      homeContent={<FamilyHomeContent family={currentUserData.family} userEmail={currentUserData.user?.email} />}
-      headerContent={<HeaderContent />}
-    />
+    <div style={{ height: '100%', overflow: 'hidden' }}>
+      {activeView === 'calendar' && (
+        <VerticalCalendar familyId={currentUserData.family._id} />
+      )}
+      
+      {activeView === 'settings' && (
+        <div style={{ 
+          height: '100%',
+          overflow: 'auto'
+        }}>
+          <FamilyHomeContent 
+            family={currentUserData.family} 
+            userEmail={currentUserData.user?.email} 
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function HeaderWithNavigation({ activeView, setActiveView }: {
+  activeView: 'calendar' | 'settings';
+  setActiveView: (view: 'calendar' | 'settings') => void;
+}) {
+  const navItems = [
+    {
+      id: 'calendar' as const,
+      label: 'Kalender',
+      icon: '📅',
+      color: 'var(--color-accent-purple)'
+    },
+    {
+      id: 'settings' as const,
+      label: 'Einstellungen',
+      icon: '⚙️',
+      color: 'var(--color-accent-green)'
+    }
+  ];
+
+  return (
+    <header style={{ 
+      background: 'rgb(0 0 0 / 48%)', 
+      padding: '16px 32px',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
+      flexShrink: 0,
+      gap: '24px'
+    }}>
+      {/* Logo */}
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <img 
+          src={logoImage} 
+          alt="Koobi Logo" 
+          style={{ 
+            objectFit: 'contain'
+          }} 
+        />
+      </div>
+
+      {/* Navigation */}
+      <nav style={{ 
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        flex: 1,
+        justifyContent: 'center'
+      }}>
+        {navItems.map((item) => (
+          <button
+            key={item.id}
+            onClick={() => setActiveView(item.id)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '12px 20px',
+              background: activeView === item.id 
+                ? 'var(--color-surface)' 
+                : 'transparent',
+              border: 'none',
+              borderRadius: '16px',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+              outline: 'none',
+              color: 'var(--color-text)',
+              fontSize: '16px',
+              fontWeight: activeView === item.id ? '600' : '500'
+            }}
+            onMouseEnter={(e) => {
+              if (activeView !== item.id) {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeView !== item.id) {
+                e.currentTarget.style.background = 'transparent';
+              }
+            }}
+          >
+            <span style={{ fontSize: '20px' }}>{item.icon}</span>
+            <span className="nav-label" style={{
+              // Auf mobilen Geräten Labels ausblenden
+              display: 'none'
+            }}>
+              {item.label}
+            </span>
+          </button>
+        ))}
+      </nav>
+
+      {/* Abmelden Button */}
+      <SignOutButton />
+    </header>
   );
 }
