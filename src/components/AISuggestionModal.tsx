@@ -80,8 +80,8 @@ export function AISuggestionModal({ familyId, selectedDate, onMealCreated, onCan
           allergies: member.allergies,
         }));
 
-      // Get recent meals (simplified - in real app you'd fetch this)
-      const recentMeals: Array<{ title: string; date: string }> = [];
+      // Get the suggestion date - use selectedDate or today as fallback
+      const suggestionDate = selectedDate || new Date().toISOString().split('T')[0];
 
       const suggestion = await generateSuggestion({
         familyId,
@@ -89,9 +89,9 @@ export function AISuggestionModal({ familyId, selectedDate, onMealCreated, onCan
         mealType,
         customHints: customHints.trim() || undefined,
         availableIngredients: availableIngredients.trim() || undefined,
+        suggestionDate,
         excludeLastMealsCount,
         familyPreferences: selectedFamilyPreferences,
-        recentMeals,
       });
 
       setGeneratedSuggestion(suggestion);
@@ -109,6 +109,7 @@ export function AISuggestionModal({ familyId, selectedDate, onMealCreated, onCan
     customHints,
     availableIngredients,
     excludeLastMealsCount,
+    selectedDate,
     generateSuggestion,
   ]);
 

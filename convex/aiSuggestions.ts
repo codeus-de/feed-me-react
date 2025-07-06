@@ -11,16 +11,13 @@ export const generateMealSuggestion = action({
     mealType: v.union(v.literal("large"), v.literal("small")), // large = große Mahlzeit, small = kleiner Snack
     customHints: v.optional(v.string()),
     availableIngredients: v.optional(v.string()),
+    suggestionDate: v.string(), // Datum für den Vorschlag im Format YYYY-MM-DD
     excludeLastMealsCount: v.number(), // Anzahl der letzten Mahlzeiten die vermieden werden sollen
     familyPreferences: v.array(v.object({
       name: v.union(v.string(), v.null()),
       preferences: v.union(v.string(), v.null()),
       dislikes: v.union(v.string(), v.null()),
       allergies: v.union(v.string(), v.null()),
-    })),
-    recentMeals: v.array(v.object({
-      title: v.string(),
-      date: v.string(),
     })),
   },
   returns: v.object({
@@ -45,13 +42,23 @@ export const generateMealSuggestion = action({
       throw new Error("Nicht authentifiziert");
     }
 
+    // Load recent meals for the family before the suggestion date
+    const recentMeals: Array<{ title: string; date: string }> = await ctx.runQuery(
+      internal.aiSuggestions.getRecentMeals,
+      {
+        familyId: args.familyId,
+        beforeDate: args.suggestionDate,
+        limit: args.excludeLastMealsCount,
+      }
+    );
+
     // Build prompt for OpenAI
     const prompt = buildPrompt({
       mealType: args.mealType,
       familyPreferences: args.familyPreferences,
       customHints: args.customHints,
       availableIngredients: args.availableIngredients,
-      recentMeals: args.recentMeals,
+      recentMeals,
       portionCount: args.selectedUserIds.length,
     });
 
@@ -179,7 +186,7 @@ export const generateMealSuggestion = action({
             availableIngredients: args.availableIngredients,
             excludeLastMealsCount: args.excludeLastMealsCount,
             familyPreferences: args.familyPreferences,
-            recentMeals: args.recentMeals,
+            recentMeals,
             generatedPrompt: prompt,
             openaiResponse,
             parsedSuggestion: suggestion,
@@ -412,6 +419,38 @@ export const getAISuggestionLogDetail = query({
   })),
   handler: async (ctx, args) => {
     return await ctx.db.get(args.logId);
+  },
+});
+
+// Internal query to get recent meals for a family before a specific date
+export const getRecentMeals = internalQuery({
+  args: {
+    familyId: v.id("families"),
+    beforeDate: v.string(), // Format YYYY-MM-DD
+    limit: v.number(),
+  },
+  returns: v.array(v.object({
+    title: v.string(),
+    date: v.string(),
+  })),
+  handler: async (ctx, args) => {
+    // Get all meals for the family that are before or on the given date
+    // We'll collect all meals and then sort them by date manually since we need desc order by date
+    const allMeals = await ctx.db
+      .query("meals")
+      .withIndex("by_family", (q) => q.eq("familyId", args.familyId))
+      .filter((q) => q.lte(q.field("date"), args.beforeDate))
+      .collect();
+
+    // Sort by date descending (most recent first) and take the limit
+    const sortedMeals = allMeals
+      .sort((a, b) => b.date.localeCompare(a.date))
+      .slice(0, args.limit);
+
+    return sortedMeals.map(meal => ({
+      title: meal.title,
+      date: meal.date,
+    }));
   },
 });
 
