@@ -190,12 +190,6 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
     setScrollDebounceTimer(timer);
   }, [scrollDebounceTimer]);
 
-  // Mahlzeit-Dialog öffnen
-  const openCreateMeal = useCallback((date?: string) => {
-    setSelectedDate(date);
-    setShowCreateMeal(true);
-  }, []);
-
   // Mahlzeit-Dialog schließen
   const closeCreateMeal = useCallback(() => {
     setShowCreateMeal(false);

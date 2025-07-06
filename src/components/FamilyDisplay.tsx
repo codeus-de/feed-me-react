@@ -4,10 +4,11 @@ import { api } from "../../convex/_generated/api";
 import { handleConvexError } from "../utils/errorHandling";
 import { TabNavigation } from "./TabNavigation";
 import { UserPreferences } from "./UserPreferences";
+import { Id } from "../../convex/_generated/dataModel";
 
 interface FamilyDisplayProps {
   family: {
-    _id: string;
+    _id: Id<"families">;
     name: string;
     inviteCode?: string;
     inviteCodeExpiresAt?: number;

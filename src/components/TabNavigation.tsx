@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { VerticalCalendar } from './VerticalCalendar';
+import { Id } from '../../convex/_generated/dataModel';
 
 interface TabNavigationProps {
   family: {
-    _id: string;
+    _id: Id<"families">;
     name: string;
     inviteCode?: string;
     inviteCodeExpiresAt?: number;

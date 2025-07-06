@@ -100,7 +100,7 @@ export const getFamilyPreferences = query({
 
     return familyMembers.map(member => ({
       userId: member._id,
-      name: member.name || null,
+      name: member.name || member.email || null,
       preferences: member.preferences || null,
       dislikes: member.dislikes || null,
       allergies: member.allergies || null,

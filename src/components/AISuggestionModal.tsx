@@ -246,7 +246,7 @@ export function AISuggestionModal({ familyId, selectedDate, onMealCreated, onCan
                       fontWeight: '600',
                       color: 'var(--color-text)' 
                     }}>
-                      {member.name || 'Unbenanntes Mitglied'}
+                      {member.name || 'Unbekanntes Mitglied'}
                     </div>
                     {(member.preferences || member.dislikes || member.allergies) && (
                       <div style={{ 
