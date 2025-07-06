@@ -219,7 +219,7 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
     console.log('🔄 Mahlzeit erstellt - lade Daten neu');
   }, [closeCreateMeal]);
 
-  // Nach AI Suggestion Mahlzeit-Erstellung
+  // Nach AI Mahlzeit-Erstellung
   const handleAIMealCreated = useCallback(() => {
     closeAISuggestion();
     // Lösche die geladenen Datumsbereiche, damit die Daten neu geladen werden

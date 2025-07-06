@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { useAction, useQuery } from 'convex/react';
+import { useAction, useQuery, useMutation } from 'convex/react';
 import { api } from '../../convex/_generated/api';
 import { Id } from '../../convex/_generated/dataModel';
 
@@ -38,9 +38,10 @@ export function AISuggestionModal({ familyId, selectedDate, onMealCreated, onCan
   const [generatedSuggestion, setGeneratedSuggestion] = useState<MealSuggestion | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Queries
+  // Queries and Mutations
   const familyMembers = useQuery(api.userPreferences.getFamilyPreferences, { familyId });
   const generateSuggestion = useAction(api.aiSuggestions.generateMealSuggestion);
+  const createMeal = useMutation(api.meals.createMeal);
 
   // Auto-select all family members initially
   useEffect(() => {
@@ -117,9 +118,7 @@ export function AISuggestionModal({ familyId, selectedDate, onMealCreated, onCan
     }
 
     try {
-      // For now, we'll just trigger the meal created callback
-      // In the real implementation, you would call the createMeal mutation
-      console.log('Would create meal:', {
+      await createMeal({
         familyId,
         date: selectedDate,
         title: generatedSuggestion.title,
@@ -133,7 +132,7 @@ export function AISuggestionModal({ familyId, selectedDate, onMealCreated, onCan
       console.error('Error saving meal:', error);
       setErrorMessage(error instanceof Error ? error.message : 'Fehler beim Speichern');
     }
-  }, [generatedSuggestion, selectedDate, familyId, onMealCreated]);
+  }, [generatedSuggestion, selectedDate, familyId, createMeal, onMealCreated]);
 
   const handleNewSuggestion = useCallback(() => {
     setViewState('parameters');

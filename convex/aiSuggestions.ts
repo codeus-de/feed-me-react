@@ -70,7 +70,7 @@ export const generateMealSuggestion = action({
         messages: [
           {
             role: "system",
-            content: "Du bist ein professioneller Koch-Assistent. Erstelle Rezeptvorschläge im angegebenen JSON-Format. Antworte nur mit gültigem JSON, ohne zusätzlichen Text."
+            content: "Du bist ein professioneller Koch-Assistent. Erstelle Rezeptvorschläge im angegebenen JSON-Format. Antworte ausschließlich mit gültigem JSON, ohne Markdown-Formatierung, ohne ```json oder ``` Tags und ohne zusätzlichen Text."
           },
           {
             role: "user",
@@ -95,7 +95,25 @@ export const generateMealSuggestion = action({
     }
 
     try {
-      const suggestion = JSON.parse(content);
+      // Clean the content by removing markdown code blocks
+      let cleanContent = content.trim();
+      
+      // Remove ```json at the start
+      if (cleanContent.startsWith('```json')) {
+        cleanContent = cleanContent.slice(7);
+      } else if (cleanContent.startsWith('```')) {
+        cleanContent = cleanContent.slice(3);
+      }
+      
+      // Remove ``` at the end
+      if (cleanContent.endsWith('```')) {
+        cleanContent = cleanContent.slice(0, -3);
+      }
+      
+      // Trim any remaining whitespace
+      cleanContent = cleanContent.trim();
+      
+      const suggestion = JSON.parse(cleanContent);
       
       // Validate the response structure
       if (!suggestion.title || !suggestion.steps || !suggestion.ingredients) {
