@@ -125,23 +125,48 @@ export function MealPreparationModal({ mealId, onClose }: MealPreparationModalPr
       }}
       onClick={(e) => e.stopPropagation()}
       >
+        {/* Background Image */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          borderRadius: '20px',
+          overflow: 'hidden',
+          zIndex: 0
+        }}>
+          <img 
+            src="/background-fresh-ingredients.png" 
+            alt="Background" 
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover'
+            }}
+          />
+        </div>
         {/* Header */}
         <div style={{ 
-          padding: '32px 32px 24px',
+          padding: '32px 32px 4px',
           textAlign: 'center',
-          backgroundColor: '#ffffff'
+          backgroundColor: 'rgb(29 145 72)',
+          backdropFilter: 'blur(10px)',
+          position: 'relative',
+          zIndex: 1
         }}>
           <h2 style={{ 
             fontSize: '24px', 
             fontWeight: '700', 
-            margin: '0 0 8px',
-            color: '#1a1a1a'
+            margin: '-15px 40px 3px 40px',
+            color: 'color: var(--color-text)',
+            lineHeight: '1.2',
           }}>
             {meal.title}
           </h2>
           <div style={{ 
             fontSize: '16px', 
-            color: '#666666',
+            color: 'color: var(--color-text-subtle)',
             marginBottom: '24px'
           }}>
             Für {meal.portions} {meal.portions === 1 ? 'Person' : 'Personen'}
@@ -157,7 +182,11 @@ export function MealPreparationModal({ mealId, onClose }: MealPreparationModalPr
               right: '16px',
               padding: '8px 12px',
               fontSize: '14px',
-              minWidth: 'auto'
+              width: '44px',
+              height: '44px',
+              borderRadius: '50%',
+              backgroundColor: 'white',
+              color: 'black'
             }}
           >
             ✕
@@ -168,7 +197,10 @@ export function MealPreparationModal({ mealId, onClose }: MealPreparationModalPr
         <div style={{ 
           flex: 1,
           overflow: 'auto',
-          padding: '0 32px 32px'
+          padding: '0 32px 32px',
+          backdropFilter: 'blur(10px)',
+          position: 'relative',
+          zIndex: 1
         }}>
           {/* Zutaten Section */}
           <div style={{ marginBottom: '32px' }}>
@@ -176,13 +208,14 @@ export function MealPreparationModal({ mealId, onClose }: MealPreparationModalPr
               display: 'flex', 
               alignItems: 'center', 
               justifyContent: 'space-between',
-              marginBottom: '16px'
+              marginBottom: '16px',
+              marginTop: '16px'
             }}>
               <h3 style={{ 
                 fontSize: '20px', 
                 fontWeight: '600', 
                 margin: '0',
-                color: '#1a1a1a'
+                color: 'color: var(--color-text)'
               }}>
                 📋 Zutaten sammeln
               </h3>
@@ -197,7 +230,7 @@ export function MealPreparationModal({ mealId, onClose }: MealPreparationModalPr
 
             {/* Progress Bar - Zutaten */}
             <div style={{ 
-              backgroundColor: '#f5f5f5',
+              backgroundColor: 'rgb(118 118 118)',
               height: '8px',
               borderRadius: '4px',
               marginBottom: '16px',
@@ -242,13 +275,13 @@ export function MealPreparationModal({ mealId, onClose }: MealPreparationModalPr
                       <div style={{ 
                         fontWeight: '500',
                         textDecoration: isChecked ? 'line-through' : 'none',
-                        color: isChecked ? '#666666' : '#1a1a1a'
+                        color: isChecked ? 'var(--color-text-subtle)' : 'var(--color-text)'
                       }}>
                         {ingredient.name}
                       </div>
                       <div style={{ 
                         fontSize: '14px', 
-                        color: '#666666',
+                        color: 'var(--color-text-subtle)',
                         marginTop: '2px'
                       }}>
                         {(ingredient.amountPerPortion * meal.portions).toFixed(1)} {ingredient.unit}
@@ -289,7 +322,7 @@ export function MealPreparationModal({ mealId, onClose }: MealPreparationModalPr
                 fontSize: '20px', 
                 fontWeight: '600', 
                 margin: '0',
-                color: '#1a1a1a'
+                color: 'var(--color-text)'
               }}>
                 👨‍🍳 Zubereitung
               </h3>
@@ -304,7 +337,7 @@ export function MealPreparationModal({ mealId, onClose }: MealPreparationModalPr
 
             {/* Progress Bar - Schritte */}
             <div style={{ 
-              backgroundColor: '#f5f5f5',
+              backgroundColor: 'rgb(118 118 118)',
               height: '8px',
               borderRadius: '4px',
               marginBottom: '16px',
@@ -354,7 +387,7 @@ export function MealPreparationModal({ mealId, onClose }: MealPreparationModalPr
                         marginBottom: '8px'
                       }}>
                         <div style={{ 
-                          backgroundColor: '#3b82f6',
+                          backgroundColor: 'var(--color-accent-green)',
                           color: 'white',
                           padding: '4px 8px',
                           borderRadius: '12px',
@@ -366,7 +399,7 @@ export function MealPreparationModal({ mealId, onClose }: MealPreparationModalPr
                         {step.estimatedMinutes && (
                           <div style={{ 
                             fontSize: '12px',
-                            color: '#666666',
+                            color: 'var(--color-text-subtle)',
                             fontWeight: '500'
                           }}>
                             📅 ~{step.estimatedMinutes} Min
@@ -376,7 +409,7 @@ export function MealPreparationModal({ mealId, onClose }: MealPreparationModalPr
                       <div style={{ 
                         lineHeight: '1.5',
                         textDecoration: isChecked ? 'line-through' : 'none',
-                        color: isChecked ? '#666666' : '#1a1a1a'
+                        color: isChecked ? 'var(--color-text-subtle)' : 'var(--color-text)'
                       }}>
                         {step.instructions}
                       </div>
