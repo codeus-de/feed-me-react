@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useQuery } from 'convex/react';
 import { api } from '../../convex/_generated/api';
 import { CreateMeal } from './CreateMeal';
+import { AISuggestionModal } from './AISuggestionModal';
 
 interface CalendarDay {
   date: Date;
@@ -52,6 +53,7 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
   const [visibleDates, setVisibleDates] = useState<Set<string>>(new Set());
   const [scrollDebounceTimer, setScrollDebounceTimer] = useState<NodeJS.Timeout | null>(null);
   const [showCreateMeal, setShowCreateMeal] = useState(false);
+  const [showAISuggestion, setShowAISuggestion] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | undefined>(undefined);
   const [allMeals, setAllMeals] = useState<Record<string, Meal[]>>({});
   const hasScrolledToTodayRef = useRef(false);
@@ -196,6 +198,18 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
     setSelectedDate(undefined);
   }, []);
 
+  // AI Suggestion Dialog öffnen
+  const openAISuggestion = useCallback((date?: string) => {
+    setSelectedDate(date);
+    setShowAISuggestion(true);
+  }, []);
+
+  // AI Suggestion Dialog schließen
+  const closeAISuggestion = useCallback(() => {
+    setShowAISuggestion(false);
+    setSelectedDate(undefined);
+  }, []);
+
   // Nach Mahlzeit-Erstellung
   const handleMealCreated = useCallback(() => {
     closeCreateMeal();
@@ -204,6 +218,15 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
     setAllMeals({});
     console.log('🔄 Mahlzeit erstellt - lade Daten neu');
   }, [closeCreateMeal]);
+
+  // Nach AI Suggestion Mahlzeit-Erstellung
+  const handleAIMealCreated = useCallback(() => {
+    closeAISuggestion();
+    // Lösche die geladenen Datumsbereiche, damit die Daten neu geladen werden
+    setLoadedDateRanges(new Set());
+    setAllMeals({});
+    console.log('🔄 AI Mahlzeit erstellt - lade Daten neu');
+  }, [closeAISuggestion]);
 
   // Hilfsfunktion: Tag erstellen
   const createDay = useCallback((date: Date): CalendarDay => {
@@ -613,27 +636,52 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
                       </div>
                     ))}
                     
-                    {/* Mahlzeit hinzufügen Button */}
-                    <button
-                      onClick={() => openCreateMeal(dateStr)}
-                      className="beos-button"
-                      style={{
-                        padding: '8px 16px',
-                        fontSize: '14px',
-                        marginTop: '8px',
-                        backgroundColor: day.isToday ? 'rgba(255,255,255,0.1)' : 'var(--color-surface)',
-                        color: day.isToday ? 'white' : 'var(--color-text)',
-                        border: 'none',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        width: '100%',
-                        justifyContent: 'center'
-                      }}
-                    >
-                      <span>➕</span>
-                      <span>Mahlzeit hinzufügen</span>
-                    </button>
+                    {/* Mahlzeit hinzufügen Buttons */}
+                    <div style={{ 
+                      display: 'flex', 
+                      gap: '8px',
+                      marginTop: '8px' 
+                    }}>
+                      <button
+                        onClick={() => openCreateMeal(dateStr)}
+                        className="beos-button"
+                        style={{
+                          padding: '8px 16px',
+                          fontSize: '14px',
+                          backgroundColor: day.isToday ? 'rgba(255,255,255,0.1)' : 'var(--color-surface)',
+                          color: day.isToday ? 'white' : 'var(--color-text)',
+                          border: 'none',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          flex: 1,
+                          justifyContent: 'center'
+                        }}
+                      >
+                        <span>➕</span>
+                        <span>Manuell</span>
+                      </button>
+                      
+                      <button
+                        onClick={() => openAISuggestion(dateStr)}
+                        className="beos-button"
+                        style={{
+                          padding: '8px 16px',
+                          fontSize: '14px',
+                          backgroundColor: day.isToday ? 'rgba(255,255,255,0.15)' : 'var(--color-accent-purple)',
+                          color: 'white',
+                          border: 'none',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          flex: 1,
+                          justifyContent: 'center'
+                        }}
+                      >
+                        <span>🤖</span>
+                        <span>KI-Vorschlag</span>
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <div style={{
@@ -652,24 +700,52 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
                       {day.isToday ? 'Keine Pläne für heute' : 'Keine Pläne'}
                     </div>
                     
-                    {/* Mahlzeit hinzufügen Button für leere Tage */}
-                    <button
-                      onClick={() => openCreateMeal(dateStr)}
-                      className="beos-button beos-button-primary"
-                      style={{
-                        padding: '8px 16px',
-                        fontSize: '14px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        backgroundColor: day.isToday ? 'rgba(255,255,255,0.2)' : 'var(--color-accent-green)',
-                        color: 'white',
-                        border: 'none'
-                      }}
-                    >
-                      <span>➕</span>
-                      <span>Mahlzeit planen</span>
-                    </button>
+                    {/* Mahlzeit hinzufügen Buttons für leere Tage */}
+                    <div style={{ 
+                      display: 'flex', 
+                      gap: '8px',
+                      width: '100%' 
+                    }}>
+                      <button
+                        onClick={() => openCreateMeal(dateStr)}
+                        className="beos-button beos-button-primary"
+                        style={{
+                          padding: '8px 16px',
+                          fontSize: '14px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          backgroundColor: day.isToday ? 'rgba(255,255,255,0.2)' : 'var(--color-accent-green)',
+                          color: 'white',
+                          border: 'none',
+                          flex: 1,
+                          justifyContent: 'center'
+                        }}
+                      >
+                        <span>➕</span>
+                        <span>Manuell planen</span>
+                      </button>
+                      
+                      <button
+                        onClick={() => openAISuggestion(dateStr)}
+                        className="beos-button"
+                        style={{
+                          padding: '8px 16px',
+                          fontSize: '14px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          backgroundColor: day.isToday ? 'rgba(255,255,255,0.2)' : 'var(--color-accent-purple)',
+                          color: 'white',
+                          border: 'none',
+                          flex: 1,
+                          justifyContent: 'center'
+                        }}
+                      >
+                        <span>🤖</span>
+                        <span>KI-Vorschlag</span>
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
@@ -751,6 +827,40 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
               selectedDate={selectedDate}
               onMealCreated={handleMealCreated}
               onCancel={closeCreateMeal}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* AI Suggestion Modal */}
+      {showAISuggestion && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          zIndex: 2000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '16px'
+        }}>
+          <div style={{
+            backgroundColor: 'var(--color-primary)',
+            borderRadius: '20px',
+            maxHeight: '90vh',
+            overflowY: 'auto',
+            width: '100%',
+            maxWidth: '900px',
+            position: 'relative'
+          }}>
+            <AISuggestionModal 
+              familyId={familyId as any}
+              selectedDate={selectedDate}
+              onMealCreated={handleAIMealCreated}
+              onCancel={closeAISuggestion}
             />
           </div>
         </div>

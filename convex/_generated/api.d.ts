@@ -13,6 +13,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as aiSuggestions from "../aiSuggestions.js";
 import type * as auth from "../auth.js";
 import type * as http from "../http.js";
 import type * as meals from "../meals.js";
@@ -28,6 +29,7 @@ import type * as userPreferences from "../userPreferences.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  aiSuggestions: typeof aiSuggestions;
   auth: typeof auth;
   http: typeof http;
   meals: typeof meals;
