@@ -520,3 +520,59 @@ input, textarea, [contenteditable] {
     display: none !important;
   }
 }
+
+/* Premium KI-Button Animationen */
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-8px) rotate(5deg);
+    opacity: 1;
+  }
+}
+
+/* Gradient Text für Premium-Feel */
+.gradient-text {
+  background: linear-gradient(135deg, #ff6b35 0%, #ffa726 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Premium Button Hover States mit Webkit Support */
+.premium-button-hover {
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 50%, #ffa726 100%);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-button-hover:hover {
+  background: linear-gradient(135deg, #ff8c42 0%, #ffa726 50%, #ffb74d 100%);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 28px rgba(255, 107, 53, 0.4), 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.premium-button-hover:active {
+  transform: translateY(-1px) scale(0.98);
+}

@@ -663,31 +663,132 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
                       </div>
                     ))}
                     
-                    {/* Mahlzeit hinzufügen Buttons */}
+                    {/* KI-Vorschlag - Premium Button */}
                     <div style={{ 
-                      display: 'flex', 
-                      gap: '8px',
-                      marginTop: '8px' 
+                      marginTop: '16px',
+                      position: 'relative'
                     }}>                      
                       
                       <button
                         onClick={() => openAISuggestion(dateStr)}
                         className="beos-button"
                         style={{
-                          padding: '8px 16px',
-                          fontSize: '14px',
-                          backgroundColor: 'var(--color-accent-orange)',
+                          padding: '16px 24px',
+                          fontSize: '16px',
+                          fontWeight: '600',
+                          background: 'linear-gradient(135deg, #ff6b35 0%, #ff8c42 50%, #ffa726 100%)',
                           color: 'white',
                           border: 'none',
+                          borderRadius: '20px',
                           display: 'flex',
                           alignItems: 'center',
-                          gap: '8px',
-                          flex: 1,
-                          justifyContent: 'center'
+                          gap: '12px',
+                          width: '100%',
+                          justifyContent: 'center',
+                          position: 'relative',
+                          overflow: 'hidden',
+                          boxShadow: '0 8px 20px rgba(255, 107, 53, 0.3), 0 2px 8px rgba(255, 107, 53, 0.2)',
+                          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          transform: 'translateY(0)',
+                          minHeight: '60px'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                          e.currentTarget.style.boxShadow = '0 12px 28px rgba(255, 107, 53, 0.4), 0 4px 12px rgba(255, 107, 53, 0.3)';
+                          e.currentTarget.style.background = 'linear-gradient(135deg, #ff8c42 0%, #ffa726 50%, #ffb74d 100%)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                          e.currentTarget.style.boxShadow = '0 8px 20px rgba(255, 107, 53, 0.3), 0 2px 8px rgba(255, 107, 53, 0.2)';
+                          e.currentTarget.style.background = 'linear-gradient(135deg, #ff6b35 0%, #ff8c42 50%, #ffa726 100%)';
+                        }}
+                        onMouseDown={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-1px) scale(0.98)';
+                        }}
+                        onMouseUp={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
                         }}
                       >
-                        <span>🤖</span>
-                        <span>KI-Vorschlag</span>
+                        {/* Glitzer-Effekt */}
+                        <div style={{
+                          position: 'absolute',
+                          top: '0',
+                          left: '-100%',
+                          width: '100%',
+                          height: '100%',
+                          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+                          animation: 'shimmer 3s infinite',
+                          zIndex: 1
+                        }} />
+                        
+                        {/* Magic Icon */}
+                        <div style={{
+                          fontSize: '24px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: '32px',
+                          height: '32px',
+                          background: 'rgba(255, 255, 255, 0.2)',
+                          borderRadius: '50%',
+                          position: 'relative',
+                          zIndex: 2
+                        }}>
+                          ✨
+                        </div>
+                        
+                        <div style={{ 
+                          display: 'flex', 
+                          flexDirection: 'column', 
+                          alignItems: 'flex-start',
+                          position: 'relative',
+                          zIndex: 2
+                        }}>
+                          <span style={{ 
+                            fontWeight: '700',
+                            fontSize: '16px',
+                            letterSpacing: '0.5px'
+                          }}>
+                            KI-Kochidee
+                          </span>
+                          <span style={{ 
+                            fontSize: '12px',
+                            opacity: 0.9,
+                            fontWeight: '400'
+                          }}>
+                            Lass dich überraschen!
+                          </span>
+                        </div>
+                        
+                        {/* Pulsing Dots */}
+                        <div style={{
+                          display: 'flex',
+                          gap: '4px',
+                          position: 'relative',
+                          zIndex: 2
+                        }}>
+                          <div style={{
+                            width: '6px',
+                            height: '6px',
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                            borderRadius: '50%',
+                            animation: 'pulse 2s infinite'
+                          }} />
+                          <div style={{
+                            width: '6px',
+                            height: '6px',
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                            borderRadius: '50%',
+                            animation: 'pulse 2s infinite 0.3s'
+                          }} />
+                          <div style={{
+                            width: '6px',
+                            height: '6px',
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                            borderRadius: '50%',
+                            animation: 'pulse 2s infinite 0.6s'
+                          }} />
+                        </div>
                       </button>
                     </div>
                   </div>
@@ -708,31 +809,130 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
                       {day.isToday ? 'Keine Pläne für heute' : 'Keine Pläne'}
                     </div>
                     
-                    {/* Mahlzeit hinzufügen Buttons für leere Tage */}
+                    {/* KI-Vorschlag für leere Tage - Premium Button */}
                     <div style={{ 
-                      display: 'flex', 
-                      gap: '8px',
-                      width: '100%' 
+                      width: '100%',
+                      marginTop: '8px'
                     }}>
                       
                       <button
                         onClick={() => openAISuggestion(dateStr)}
                         className="beos-button"
                         style={{
-                          padding: '8px 16px',
-                          fontSize: '14px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          backgroundColor: 'var(--color-accent-orange)',
+                          padding: '20px 24px',
+                          fontSize: '16px',
+                          fontWeight: '600',
+                          background: 'linear-gradient(135deg, #ff6b35 0%, #ff8c42 50%, #ffa726 100%)',
                           color: 'white',
                           border: 'none',
-                          flex: 1,
-                          justifyContent: 'center'
+                          borderRadius: '20px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '16px',
+                          width: '100%',
+                          justifyContent: 'center',
+                          position: 'relative',
+                          overflow: 'hidden',
+                          boxShadow: '0 8px 20px rgba(255, 107, 53, 0.3), 0 2px 8px rgba(255, 107, 53, 0.2)',
+                          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          transform: 'translateY(0)',
+                          minHeight: '70px'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-4px) scale(1.03)';
+                          e.currentTarget.style.boxShadow = '0 16px 32px rgba(255, 107, 53, 0.4), 0 6px 16px rgba(255, 107, 53, 0.3)';
+                          e.currentTarget.style.background = 'linear-gradient(135deg, #ff8c42 0%, #ffa726 50%, #ffb74d 100%)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                          e.currentTarget.style.boxShadow = '0 8px 20px rgba(255, 107, 53, 0.3), 0 2px 8px rgba(255, 107, 53, 0.2)';
+                          e.currentTarget.style.background = 'linear-gradient(135deg, #ff6b35 0%, #ff8c42 50%, #ffa726 100%)';
+                        }}
+                        onMouseDown={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-2px) scale(0.98)';
+                        }}
+                        onMouseUp={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-4px) scale(1.03)';
                         }}
                       >
-                        <span>🤖</span>
-                        <span>KI-Vorschlag</span>
+                        {/* Animated Sparkle Background */}
+                        <div style={{
+                          position: 'absolute',
+                          top: '0',
+                          left: '-100%',
+                          width: '100%',
+                          height: '100%',
+                          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
+                          animation: 'shimmer 2.5s infinite',
+                          zIndex: 1
+                        }} />
+                        
+                        {/* Premium Magic Icon */}
+                        <div style={{
+                          fontSize: '28px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: '40px',
+                          height: '40px',
+                          background: 'rgba(255, 255, 255, 0.25)',
+                          borderRadius: '50%',
+                          position: 'relative',
+                          zIndex: 2,
+                          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+                        }}>
+                          ✨
+                        </div>
+                        
+                        <div style={{ 
+                          display: 'flex', 
+                          flexDirection: 'column', 
+                          alignItems: 'center',
+                          position: 'relative',
+                          zIndex: 2,
+                          flex: 1
+                        }}>
+                          <span style={{ 
+                            fontWeight: '700',
+                            fontSize: '18px',
+                            letterSpacing: '0.5px',
+                            marginBottom: '2px'
+                          }}>
+                            KI-Kochmagie starten
+                          </span>
+                          <span style={{ 
+                            fontSize: '13px',
+                            opacity: 0.95,
+                            fontWeight: '400'
+                          }}>
+                            Perfekte Rezepte für {day.isToday ? 'heute' : 'diesen Tag'}
+                          </span>
+                        </div>
+                        
+                        {/* Floating Stars */}
+                        <div style={{
+                          position: 'absolute',
+                          right: '20px',
+                          top: '50%',
+                          transform: 'translateY(-50%)',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '8px',
+                          zIndex: 2
+                        }}>
+                          <span style={{ 
+                            fontSize: '16px',
+                            animation: 'float 3s ease-in-out infinite'
+                          }}>✨</span>
+                          <span style={{ 
+                            fontSize: '12px',
+                            animation: 'float 3s ease-in-out infinite 1s'
+                          }}>⭐</span>
+                          <span style={{ 
+                            fontSize: '14px',
+                            animation: 'float 3s ease-in-out infinite 2s'
+                          }}>💫</span>
+                        </div>
                       </button>
                     </div>
                   </div>
