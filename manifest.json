@@ -5,7 +5,7 @@
   "start_url": "/feed-me-react/",
   "display": "standalone",
   "background_color": "#838383",
-  "theme_color": "#008d38",
+  "theme_color": "#000000",
   "orientation": "portrait-primary",
   "scope": "/",
   "icons": [
