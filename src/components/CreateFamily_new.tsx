@@ -53,7 +53,7 @@ export function CreateFamily() {
               style={{
                 background: 'none',
                 border: 'none',
-                color: 'var(--color-accent-blue)',
+                color: 'var(--color-accent-green)',
                 textDecoration: 'underline',
                 cursor: 'pointer',
                 fontSize: '16px'

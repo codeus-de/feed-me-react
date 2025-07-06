@@ -43,7 +43,7 @@ export function TabNavigation({ family, userEmail: _userEmail, homeContent, head
       {/* Left Sidebar Navigation - Desktop/Tablet */}
       <div style={{ 
         width: '200px',
-        background: 'var(--color-primary)',
+        background: 'rgb(0 0 0 / 75%)',
         borderRight: 'none',
         boxShadow: '2px 0 12px rgba(0, 0, 0, 0.08)',
         padding: '24px 16px',
@@ -143,7 +143,7 @@ export function TabNavigation({ family, userEmail: _userEmail, homeContent, head
 
       {/* Mobile Bottom Navigation - Fixed bottom area on mobile portrait */}
       <div style={{ 
-        background: '#e4e4e4',
+        background: 'rgb(0 0 0 / 75%)',
         borderTop: 'none',
         boxShadow: '0 -2px 12px rgba(0, 0, 0, 0.08)',
         padding: '16px 24px',

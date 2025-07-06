@@ -12,7 +12,7 @@ import { useState } from "react";
 import { CreateFamily } from "./components/CreateFamily";
 import { TabNavigation } from "./components/TabNavigation";
 import { FamilyHomeContent } from "./components/FamilyDisplay";
-import logoImage from "./assets/MahlzeitMagier-Logo-No-Text-Small-Transparent.png";
+import logoImage from "./assets/koobi-96.png";
 
 export default function App() {
   return (
@@ -22,7 +22,7 @@ export default function App() {
       flexDirection: 'column' 
     }}>
       <header style={{ 
-        background: 'var(--color-primary)', 
+        background: 'rgb(0 0 0 / 48%)', 
         padding: '24px 32px',
         display: 'flex',
         justifyContent: 'space-between',
@@ -34,25 +34,16 @@ export default function App() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <img 
             src={logoImage} 
-            alt="MahlzeitMagier Logo" 
+            alt="Koobi Logo" 
             style={{ 
               objectFit: 'contain'
             }} 
           />
-          <h1 style={{ 
-            fontSize: '24px', 
-            fontWeight: '600', 
-            color: 'var(--color-text)',
-            margin: 0
-          }}>
-            MahlzeitMagier
-          </h1>
         </div>
         <SignOutButton />
       </header>
       <main style={{ 
         flex: 1,
-        background: 'var(--color-primary)',
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column'
@@ -78,7 +69,7 @@ function SignOutButton() {
           className="beos-button"
           onClick={() => void signOut()}
           style={{ 
-            padding: '8px', 
+            padding: '0px 0px 2px 0px', 
             fontSize: '16px',
             minWidth: 'auto',
             width: '40px',
@@ -108,7 +99,7 @@ function HeaderContent() {
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         <img 
           src={logoImage} 
-          alt="MahlzeitMagier Logo" 
+          alt="Koobi Logo" 
           style={{ 
             objectFit: 'contain',
             width: '32px',
@@ -121,7 +112,7 @@ function HeaderContent() {
           color: 'var(--color-text)',
           margin: 0
         }}>
-          MahlzeitMagier
+          Koobi
         </h1>
       </div>
       <SignOutButton />
@@ -212,7 +203,7 @@ function SignInForm() {
             style={{
               background: 'none',
               border: 'none',
-              color: 'var(--color-accent-blue)',
+              color: 'var(--color-accent-green)',
               textDecoration: 'underline',
               cursor: 'pointer',
               fontSize: '14px'

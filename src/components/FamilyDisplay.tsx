@@ -144,7 +144,6 @@ export function FamilyHomeContent({ family, userEmail }: FamilyDisplayProps) {
                   </p>
                   <p style={{ 
                     fontSize: '14px', 
-                    color: 'var(--color-accent-blue)',
                     margin: 0,
                     fontWeight: '500'
                   }}>
@@ -157,7 +156,7 @@ export function FamilyHomeContent({ family, userEmail }: FamilyDisplayProps) {
                   style={{ 
                     padding: '12px 20px',
                     fontSize: '14px',
-                    background: copiedCode ? 'var(--color-accent-green)' : 'var(--color-accent-blue)'
+                    background: copiedCode ? 'var(--color-accent-green)' : 'var(--color-accent-green)'
                   }}
                 >
                   {copiedCode ? "✓ Kopiert!" : "📋 Kopieren"}
@@ -273,7 +272,7 @@ export function FamilyHomeContent({ family, userEmail }: FamilyDisplayProps) {
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span style={{ color: 'var(--color-accent-blue)', fontSize: '16px' }}>⏰</span>
+                <span style={{ color: 'var(--color-accent-green)', fontSize: '16px' }}>⏰</span>
                 <span style={{ fontSize: '14px', color: 'var(--color-text)' }}>
                   Einladungscodes sind 1 Stunde gültig
                 </span>

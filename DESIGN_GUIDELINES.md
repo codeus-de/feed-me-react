@@ -67,8 +67,8 @@
 - `--color-text-subtle` - Grauer subtiler Text
 
 ### **Akzent-Farben**
-- `--color-accent-blue` - Primäre Aktionen
-- `--color-accent-green` - Erfolg, Familie
+- `--color-accent-green` - Primäre Aktionen, Familie
+- `--color-accent-blue` - Erfolg
 - `--color-accent-orange` - Warnung, Beitreten
 - `--color-accent-red` - Fehler
 - `--color-accent-purple` - Info, Tipps

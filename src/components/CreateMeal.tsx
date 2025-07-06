@@ -393,7 +393,7 @@ export function CreateMeal({ familyId, selectedDate, onMealCreated, onCancel }: 
                 marginBottom: '12px'
               }}>
                 <div style={{ 
-                  backgroundColor: 'var(--color-accent-blue)',
+                  backgroundColor: 'var(--color-accent-green)',
                   color: 'white',
                   borderRadius: '50%',
                   width: '24px',

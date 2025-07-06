@@ -485,7 +485,7 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
               style={{ 
                 marginBottom: '16px',
                 padding: '20px',
-                backgroundColor: day.isToday ? 'var(--color-accent-blue)' : 'var(--color-primary)',
+                backgroundColor: day.isToday ? '#02913ba6' : 'rgba(255, 255, 255, 0.1)',
                 color: day.isToday ? 'white' : 'var(--color-text)',
                 opacity: day.isCurrentMonth ? 1 : 0.7,
                 boxShadow: '0 8px 12px rgba(0, 0, 0, 0.12)'
@@ -662,7 +662,7 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '8px',
-                        backgroundColor: day.isToday ? 'rgba(255,255,255,0.2)' : 'var(--color-accent-blue)',
+                        backgroundColor: day.isToday ? 'rgba(255,255,255,0.2)' : 'var(--color-accent-green)',
                         color: 'white',
                         border: 'none'
                       }}
@@ -694,7 +694,7 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
               borderRadius: '24px',
               fontSize: '16px',
               fontWeight: '600',
-              backgroundColor: 'var(--color-accent-blue)',
+              backgroundColor: 'var(--color-accent-green)',
               color: 'white',
               border: 'none',
               cursor: 'pointer',
@@ -706,10 +706,10 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
               transform: showJumpButton ? 'translateY(0)' : 'translateY(10px)'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'var(--color-accent-blue-dark)';
+              e.currentTarget.style.backgroundColor = 'var(--color-accent-green-dark)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'var(--color-accent-blue)';
+              e.currentTarget.style.backgroundColor = 'var(--color-accent-green)';
             }}
           >
             <div style={{ marginRight: '8px' }}>

@@ -1,14 +1,30 @@
 @import "tailwindcss";
 
+.app-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 /* BeOS-inspired design system */
 :root {
-  --color-primary: #ffffff;        /* Weiß für Haupthintergrund */
-  --color-surface: #f5f5f5;        /* Helles Grau für Oberflächen */
-  --color-surface-hover: #e8e8e8;  /* Dunkleres Grau für Hover */
-  --color-text: #1a1a1a;           /* Dunkler Text für hohen Kontrast */
-  --color-text-subtle: #666666;    /* Subtiler Text */
+  --color-primary: ##83838;        /* Dunkles Grau für Haupthintergrund */
+  --color-surface: #676767d6;        /* Helles Grau für Oberflächen */
+  --color-surface-hover: #464646f3;  /* Dunkleres Grau für Hover */
+  --color-text: #fbfbfb;           /* Dunkler Text für hohen Kontrast */
+  --color-text-subtle: #d9d9d9;    /* Subtiler Text */
   --color-accent-blue: #0066cc;
-  --color-accent-green: #00aa44;
+  --color-accent-green: #008d38;
   --color-accent-orange: #ff6600;
   --color-accent-red: #cc0000;
   --color-accent-purple: #8800cc;
@@ -54,7 +70,7 @@ body {
 }
 
 .beos-button-primary {
-  background: var(--color-accent-blue);
+  background: var(--color-accent-green);
   color: white;
 }
 
@@ -94,10 +110,13 @@ body {
 
 /* BeOS-style card - elevated surface */
 .beos-card {
-  background: var(--color-primary);
-  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 16px;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   padding: 40px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
   border: none;
 }
 
@@ -122,8 +141,12 @@ body {
 
 /* Info box style */
 .beos-info-box {
-  background: var(--color-surface);
-  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 16px;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   padding: 28px;
   border: none;
 }
@@ -147,7 +170,7 @@ body {
   padding: 16px;
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  scrollbar-color: var(--color-accent-blue) transparent;
+  scrollbar-color: var(--color-accent-green) transparent;
   align-items: flex-start;
 }
 
@@ -161,7 +184,7 @@ body {
 }
 
 .calendar-container::-webkit-scrollbar-thumb {
-  background: var(--color-accent-blue);
+  background: var(--color-accent-green);
   border-radius: 4px;
 }
 
@@ -216,7 +239,7 @@ body {
 }
 
 .calendar-day.today {
-  background: var(--color-accent-blue);
+  background: var(--color-accent-green);
   color: white;
   box-shadow: 0 4px 20px rgba(0, 102, 204, 0.3);
 }
@@ -254,7 +277,7 @@ body {
   gap: 0; /* Kein zusätzlicher Gap, da marginBottom in den Tagen bereits da ist */
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: var(--color-accent-blue) transparent;
+  scrollbar-color: var(--color-accent-green) transparent;
 }
 
 .vertical-calendar-container::-webkit-scrollbar {
@@ -267,7 +290,7 @@ body {
 }
 
 .vertical-calendar-container::-webkit-scrollbar-thumb {
-  background: var(--color-accent-blue);
+  background: var(--color-accent-green);
   border-radius: 4px;
 }
 
