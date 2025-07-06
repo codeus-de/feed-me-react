@@ -112,7 +112,7 @@ export function MealPreparationModal({ mealId, onClose }: MealPreparationModalPr
     onClick={handleCloseModal}
     >
       <div style={{
-        backgroundColor: 'var(--color-primary)',
+        backgroundColor: '#0000006b',
         borderRadius: '20px',
         maxHeight: '90vh',
         overflowY: 'auto',

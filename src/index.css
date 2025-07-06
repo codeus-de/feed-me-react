@@ -18,10 +18,10 @@
 
 /* BeOS-inspired design system */
 :root {
-  --color-primary: ##83838;        /* Dunkles Grau für Haupthintergrund */
+  --color-primary: #838382;        /* Dunkles Grau für Haupthintergrund */
   --color-surface: #676767d6;        /* Helles Grau für Oberflächen */
   --color-surface-hover: #464646f3;  /* Dunkleres Grau für Hover */
-  --color-text: #fbfbfb;           /* Dunkler Text für hohen Kontrast */
+  --color-text: #fbfbfb;           /* Heller Text für hohen Kontrast */
   --color-text-subtle: #d9d9d9;    /* Subtiler Text */
   --color-accent-blue: #0066cc;
   --color-accent-green: #008d38;
