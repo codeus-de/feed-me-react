@@ -71,4 +71,48 @@ export default defineSchema({
   numbers: defineTable({
     value: v.number(),
   }),
+
+  // AI Suggestion Logs für Debugging und Optimierung
+  aiSuggestionLogs: defineTable({
+    familyId: v.id("families"),
+    userId: v.id("users"),
+    timestamp: v.number(),
+    mealType: v.union(v.literal("large"), v.literal("small")),
+    selectedUserCount: v.number(),
+    customHints: v.optional(v.string()),
+    availableIngredients: v.optional(v.string()),
+    excludeLastMealsCount: v.number(),
+    familyPreferences: v.array(v.object({
+      name: v.union(v.string(), v.null()),
+      preferences: v.union(v.string(), v.null()),
+      dislikes: v.union(v.string(), v.null()),
+      allergies: v.union(v.string(), v.null()),
+    })),
+    recentMeals: v.array(v.object({
+      title: v.string(),
+      date: v.string(),
+    })),
+    generatedPrompt: v.string(), // Der vollständige Prompt
+    openaiResponse: v.string(), // Die Rohausgabe von OpenAI
+    parsedSuggestion: v.object({
+      title: v.string(),
+      portions: v.number(),
+      steps: v.array(v.object({
+        instructions: v.string(),
+        estimatedMinutes: v.optional(v.number()),
+      })),
+      ingredients: v.array(v.object({
+        name: v.string(),
+        amountPerPortion: v.number(),
+        unit: v.string(),
+        inStock: v.boolean(),
+        estimatedKcal: v.optional(v.number()),
+      })),
+    }),
+    success: v.boolean(), // War die Generierung erfolgreich?
+    errorMessage: v.optional(v.string()), // Fehlermeldung falls nicht erfolgreich
+  })
+    .index("by_family_and_timestamp", ["familyId", "timestamp"])
+    .index("by_user_and_timestamp", ["userId", "timestamp"])
+    .index("by_timestamp", ["timestamp"]),
 });

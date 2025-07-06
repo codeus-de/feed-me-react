@@ -5,6 +5,7 @@ import { Id } from '../../convex/_generated/dataModel';
 import { CreateMeal } from './CreateMeal';
 import { AISuggestionModal } from './AISuggestionModal';
 import { MealPreparationModal } from './MealPreparationModal';
+import { MealMenu } from './MealMenu';
 
 interface CalendarDay {
   date: Date;
@@ -237,6 +238,14 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
     setAllMeals({});
     console.log('🔄 AI Mahlzeit erstellt - lade Daten neu');
   }, [closeAISuggestion]);
+
+  // Nach Mahlzeit-Löschung
+  const handleMealDeleted = useCallback(() => {
+    // Lösche die geladenen Datumsbereiche, damit die Daten neu geladen werden
+    setLoadedDateRanges(new Set());
+    setAllMeals({});
+    console.log('🔄 Mahlzeit gelöscht - lade Daten neu');
+  }, []);
 
   // Hilfsfunktion: Tag erstellen
   const createDay = useCallback((date: Date): CalendarDay => {
@@ -606,19 +615,38 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
                           <div style={{
                             fontSize: '16px',
                             fontWeight: '600',
-                            color: day.isToday ? 'white' : 'var(--color-text)'
+                            color: day.isToday ? 'white' : 'var(--color-text)',
+                            flex: 1
                           }}>
                             🍽️ {meal.title}
                           </div>
+                          
                           <div style={{
-                            fontSize: '12px',
-                            color: day.isToday ? 'rgba(255,255,255,0.8)' : 'var(--color-text-subtle)',
-                            backgroundColor: day.isToday ? 'rgba(255,255,255,0.1)' : 'var(--color-primary)',
-                            padding: '4px 8px',
-                            borderRadius: '8px',
-                            border: 'none'
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px'
                           }}>
-                            {meal.portions} {meal.portions === 1 ? 'Portion' : 'Portionen'}
+                            <div style={{
+                              fontSize: '12px',
+                              color: day.isToday ? 'rgba(255,255,255,0.8)' : 'var(--color-text-subtle)',
+                              backgroundColor: day.isToday ? 'rgba(255,255,255,0.1)' : 'var(--color-primary)',
+                              padding: '6px 8px',
+                              borderRadius: '8px',
+                              border: 'none',
+                              height: '32px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              minWidth: 'fit-content'
+                            }}>
+                              {meal.portions} {meal.portions === 1 ? 'Portion' : 'Portionen'}
+                            </div>
+                            
+                            {/* Hamburger-Menü */}
+                            <MealMenu 
+                              mealId={meal._id}
+                              mealTitle={meal.title}
+                              onMealDeleted={handleMealDeleted}
+                            />
                           </div>
                         </div>
                         

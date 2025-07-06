@@ -237,6 +237,7 @@ export const deleteMeal = mutation({
       throw new Error("Nicht authentifiziert");
     }
 
+    // Lade Mahlzeit
     const meal = await ctx.db.get(args.mealId);
     if (!meal) {
       throw new Error("Mahlzeit nicht gefunden");
@@ -248,7 +249,7 @@ export const deleteMeal = mutation({
       throw new Error("Nicht berechtigt für diese Familie");
     }
 
-    // Lösche alle Zubereitungsschritte
+    // Lösche alle Zubereitungsschritte der Mahlzeit
     const steps = await ctx.db
       .query("steps")
       .withIndex("by_meal_and_position", (q) => q.eq("mealId", args.mealId))
@@ -258,7 +259,7 @@ export const deleteMeal = mutation({
       await ctx.db.delete(step._id);
     }
 
-    // Lösche alle Zutaten
+    // Lösche alle Zutaten der Mahlzeit
     const ingredients = await ctx.db
       .query("ingredients")
       .withIndex("by_meal", (q) => q.eq("mealId", args.mealId))
@@ -268,9 +269,9 @@ export const deleteMeal = mutation({
       await ctx.db.delete(ingredient._id);
     }
 
-    // Lösche Mahlzeit
+    // Lösche die Mahlzeit selbst
     await ctx.db.delete(args.mealId);
-
+    
     return null;
   },
 });
