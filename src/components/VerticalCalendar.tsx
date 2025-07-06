@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useQuery } from 'convex/react';
 import { api } from '../../convex/_generated/api';
+import { Id } from '../../convex/_generated/dataModel';
 import { CreateMeal } from './CreateMeal';
 import { AISuggestionModal } from './AISuggestionModal';
+import { MealPreparationModal } from './MealPreparationModal';
 
 interface CalendarDay {
   date: Date;
@@ -14,36 +16,36 @@ interface CalendarDay {
 }
 
 interface Meal {
-  _id: string;
+  _id: Id<"meals">;
   date: string;
   title: string;
   portions: number;
   createdAt: number;
-  createdBy: string;
-  familyId: string;
+  createdBy: Id<"users">;
+  familyId: Id<"families">;
   _creationTime: number;
   steps: Array<{
-    _id: string;
+    _id: Id<"steps">;
     position: number;
     instructions: string;
     estimatedMinutes?: number;
-    mealId: string;
+    mealId: Id<"meals">;
     _creationTime: number;
   }>;
   ingredients: Array<{
-    _id: string;
+    _id: Id<"ingredients">;
     name: string;
     amountPerPortion: number;
     unit: string;
     inStock: boolean;
     estimatedKcal?: number;
-    mealId: string;
+    mealId: Id<"meals">;
     _creationTime: number;
   }>;
 }
 
 interface VerticalCalendarProps {
-  familyId: string;
+  familyId: Id<"families">;
 }
 
 export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
@@ -54,7 +56,9 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
   const [scrollDebounceTimer, setScrollDebounceTimer] = useState<NodeJS.Timeout | null>(null);
   const [showCreateMeal, setShowCreateMeal] = useState(false);
   const [showAISuggestion, setShowAISuggestion] = useState(false);
+  const [showMealPreparation, setShowMealPreparation] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | undefined>(undefined);
+  const [selectedMealId, setSelectedMealId] = useState<Id<"meals"> | undefined>(undefined);
   const [allMeals, setAllMeals] = useState<Record<string, Meal[]>>({});
   const hasScrolledToTodayRef = useRef(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -208,6 +212,18 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
   const closeAISuggestion = useCallback(() => {
     setShowAISuggestion(false);
     setSelectedDate(undefined);
+  }, []);
+
+  // Meal Preparation Dialog öffnen
+  const openMealPreparation = useCallback((mealId: Id<"meals">) => {
+    setSelectedMealId(mealId);
+    setShowMealPreparation(true);
+  }, []);
+
+  // Meal Preparation Dialog schließen
+  const closeMealPreparation = useCallback(() => {
+    setShowMealPreparation(false);
+    setSelectedMealId(undefined);
   }, []);
 
   // Nach Mahlzeit-Erstellung
@@ -569,11 +585,22 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
                     {dayMeals.map((meal) => (
                       <div
                         key={meal._id}
+                        onClick={() => openMealPreparation(meal._id)}
                         style={{
                           backgroundColor: day.isToday ? 'rgba(255,255,255,0.15)' : 'var(--color-surface)',
                           borderRadius: '12px',
                           padding: '12px',
-                          border: 'none'
+                          border: 'none',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-2px)';
+                          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.boxShadow = 'none';
                         }}
                       >
                         <div style={{
@@ -864,6 +891,14 @@ export function VerticalCalendar({ familyId }: VerticalCalendarProps) {
             />
           </div>
         </div>
+      )}
+
+      {/* Meal Preparation Modal */}
+      {showMealPreparation && selectedMealId && (
+        <MealPreparationModal
+          mealId={selectedMealId}
+          onClose={closeMealPreparation}
+        />
       )}
       </div>
     </div>

@@ -274,3 +274,77 @@ export const deleteMeal = mutation({
     return null;
   },
 });
+
+// Einzelne Mahlzeit mit allen Details laden
+export const getMealById = query({
+  args: {
+    mealId: v.id("meals"),
+  },
+  returns: v.union(
+    v.null(),
+    v.object({
+      _id: v.id("meals"),
+      date: v.string(),
+      title: v.string(),
+      portions: v.number(),
+      createdAt: v.number(),
+      createdBy: v.id("users"),
+      familyId: v.id("families"),
+      _creationTime: v.number(),
+      steps: v.array(v.object({
+        _id: v.id("steps"),
+        position: v.number(),
+        instructions: v.string(),
+        estimatedMinutes: v.optional(v.number()),
+        mealId: v.id("meals"),
+        _creationTime: v.number(),
+      })),
+      ingredients: v.array(v.object({
+        _id: v.id("ingredients"),
+        name: v.string(),
+        amountPerPortion: v.number(),
+        unit: v.string(),
+        inStock: v.boolean(),
+        estimatedKcal: v.optional(v.number()),
+        mealId: v.id("meals"),
+        _creationTime: v.number(),
+      })),
+    })
+  ),
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error("Nicht authentifiziert");
+    }
+
+    // Lade Mahlzeit
+    const meal = await ctx.db.get(args.mealId);
+    if (!meal) {
+      return null;
+    }
+
+    // Prüfe ob User zu Familie gehört
+    const user = await ctx.db.get(userId);
+    if (!user || user.familyId !== meal.familyId) {
+      throw new Error("Nicht berechtigt für diese Familie");
+    }
+
+    // Lade Zubereitungsschritte
+    const steps = await ctx.db
+      .query("steps")
+      .withIndex("by_meal_and_position", (q) => q.eq("mealId", meal._id))
+      .collect();
+
+    // Lade Zutaten
+    const ingredients = await ctx.db
+      .query("ingredients")
+      .withIndex("by_meal", (q) => q.eq("mealId", meal._id))
+      .collect();
+
+    return {
+      ...meal,
+      steps: steps.sort((a, b) => a.position - b.position),
+      ingredients,
+    };
+  },
+});
