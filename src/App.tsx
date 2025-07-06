@@ -12,6 +12,7 @@ import { useState } from "react";
 import { CreateFamily } from "./components/CreateFamily";
 import { TabNavigation } from "./components/TabNavigation";
 import { FamilyHomeContent } from "./components/FamilyDisplay";
+import { PWAInstallPrompt } from "./components/PWAInstallPrompt";
 import logoImage from "./assets/koobi-96.png";
 
 export default function App() {
@@ -54,6 +55,7 @@ export default function App() {
         <Unauthenticated>
           <SignInForm />
         </Unauthenticated>
+        <PWAInstallPrompt />
       </main>
     </div>
   );
@@ -72,7 +74,7 @@ function SignOutButton() {
             padding: '0px 0px 2px 0px', 
             fontSize: '16px',
             minWidth: 'auto',
-            width: '40px',
+            width: '46px',
             height: '40px',
             borderRadius: '50%',
             display: 'flex',
@@ -125,7 +127,7 @@ function SignInForm() {
   const [flow, setFlow] = useState<"signIn" | "signUp">("signIn");
   const [error, setError] = useState<string | null>(null);
   return (
-    <div style={{ padding: '32px' }}>
+    <div style={{ padding: '32px', overflow: 'auto' }}>
       <div className="beos-card" style={{ maxWidth: '400px', margin: '0 auto' }}>
       <div style={{ textAlign: 'center', marginBottom: '32px' }}>
         <div className="beos-icon beos-icon-blue" style={{ margin: '0 auto 16px' }}>🔐</div>

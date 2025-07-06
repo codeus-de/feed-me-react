@@ -146,7 +146,6 @@ export function TabNavigation({ family, userEmail: _userEmail, homeContent, head
         background: 'rgb(0 0 0 / 75%)',
         borderTop: 'none',
         boxShadow: '0 -2px 12px rgba(0, 0, 0, 0.08)',
-        padding: '16px 24px',
         display: 'flex',
         justifyContent: 'center',
         gap: '24px',

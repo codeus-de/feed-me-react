@@ -1,0 +1,39 @@
+{
+  "name": "Koobi - Family Meal Planning App",
+  "short_name": "Koobi",
+  "description": "A modern meal planning and family cooking app with AI-powered recipe suggestions, shopping lists, and family management features.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#838383",
+  "theme_color": "#008d38",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/koobi-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/koobi-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/koobi-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/koobi-512-maskable.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["food", "lifestyle", "productivity"],
+  "lang": "de-DE"
+}

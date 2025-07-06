@@ -12,4 +12,16 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // PWA-spezifische Konfiguration
+  build: {
+    // Service Worker und Manifest sollen im Root verfügbar sein
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        sw: path.resolve(__dirname, 'public/sw.js')
+      }
+    }
+  },
+  // Stelle sicher, dass Service Worker und Manifest richtig ausgeliefert werden
+  publicDir: 'public'
 });
