@@ -60,9 +60,20 @@ export function MealPreparationModal({ mealId, onClose }: MealPreparationModalPr
 
   if (!meal) {
     return (
-      <div 
-        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-        onClick={handleCloseModal}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        zIndex: 2000,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '16px'
+      }}
+      onClick={handleCloseModal}
       >
         <div className="beos-card" style={{ padding: '48px', textAlign: 'center', maxWidth: '400px' }}>
           <div className="beos-icon beos-icon-orange" style={{ margin: '0 auto 24px' }}>
@@ -85,22 +96,34 @@ export function MealPreparationModal({ mealId, onClose }: MealPreparationModalPr
   const stepsProgress = totalSteps > 0 ? (checkedSteps / totalSteps) * 100 : 0;
 
   return (
-    <div 
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
-      onClick={handleCloseModal}
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      zIndex: 2000,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '16px'
+    }}
+    onClick={handleCloseModal}
     >
-      <div 
-        className="beos-card"
-        style={{ 
-          padding: '0',
-          maxWidth: '800px',
-          width: '100%',
-          maxHeight: '90vh',
-          overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column'
-        }}
-        onClick={(e) => e.stopPropagation()}
+      <div style={{
+        backgroundColor: 'var(--color-primary)',
+        borderRadius: '20px',
+        maxHeight: '90vh',
+        overflowY: 'auto',
+        width: '100%',
+        maxWidth: '800px',
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden'
+      }}
+      onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div style={{ 
@@ -108,9 +131,6 @@ export function MealPreparationModal({ mealId, onClose }: MealPreparationModalPr
           textAlign: 'center',
           backgroundColor: '#ffffff'
         }}>
-          <div className="beos-icon beos-icon-orange" style={{ margin: '0 auto 16px' }}>
-            🍽️
-          </div>
           <h2 style={{ 
             fontSize: '24px', 
             fontWeight: '700', 
@@ -208,7 +228,6 @@ export function MealPreparationModal({ mealId, onClose }: MealPreparationModalPr
                       alignItems: 'center',
                       gap: '12px',
                       transition: 'all 0.2s ease',
-                      backgroundColor: isChecked ? '#f0f9ff' : '#f5f5f5',
                       opacity: isChecked ? 0.7 : 1
                     }}
                   >
@@ -316,7 +335,6 @@ export function MealPreparationModal({ mealId, onClose }: MealPreparationModalPr
                       alignItems: 'flex-start',
                       gap: '12px',
                       transition: 'all 0.2s ease',
-                      backgroundColor: isChecked ? '#f0f9ff' : '#f5f5f5',
                       opacity: isChecked ? 0.7 : 1
                     }}
                   >
