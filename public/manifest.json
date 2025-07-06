@@ -2,7 +2,7 @@
   "name": "Koobi - Family Meal Planning App",
   "short_name": "Koobi",
   "description": "A modern meal planning and family cooking app with AI-powered recipe suggestions, shopping lists, and family management features.",
-  "start_url": "/",
+  "start_url": "/feed-me-react/",
   "display": "standalone",
   "background_color": "#838383",
   "theme_color": "#008d38",
