@@ -1,14 +1,36 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/feed-me-react/convex.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-    <script type="module" crossorigin src="/feed-me-react/assets/index-DYmhcq0N.js"></script>
-    <link rel="stylesheet" crossorigin href="/feed-me-react/assets/index-D15cfpC1.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/feed-me-react/manifest.json" />
+    
+    <!-- iOS PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Koobi" />
+    <link rel="apple-touch-icon" href="/feed-me-react/koobi-96.png" />
+    
+    <!-- Theme Colors -->
+    <meta name="theme-color" content="#008d38" />
+    <meta name="msapplication-TileColor" content="#838383" />
+    
+    <!-- Prevent zoom on iOS -->
+    <meta name="format-detection" content="telephone=no" />
+    
+    <title>Koobi - Family Meal Planning</title>
+    <script type="module" crossorigin src="/feed-me-react/assets/main-COzbee9z.js"></script>
+    <link rel="stylesheet" crossorigin href="/feed-me-react/assets/main-IY4HWAR9.css">
   </head>
   <body>
+
+    <div class="app-background">
+        <img src="background-fresh-ingredients.png" alt="Background" class="background-image" />
+    </div>
+
     <div id="root"></div>
   </body>
 </html>
